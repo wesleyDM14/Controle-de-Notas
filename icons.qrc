@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/botao-de-menu-de-tres-linhas-horizontais (1).png</file>
+    <file>icons/icone.png</file>
+    <file>icons/Logo.png</file>
+    <file>icons/logoaqui.png</file>
+    <file>icons/whats.png</file>
+  </qresource>
+</RCC>
