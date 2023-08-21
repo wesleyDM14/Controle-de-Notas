@@ -501,6 +501,18 @@ class Data_base:
         finally:
             self.close_connection()
 
+    def get_compras_by_vompraId(self, compraId):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(f"SELECT * FROM Produtos_Compra WHERE COMPRA_ID='{compraId}'")
+            compras = cursor.fetchall()
+            return compras
+        except Exception as e:
+            print(e)
+        finally:
+            self.close_connection()
+
     def get_vendas_by_productId(self, productId):
         try:
             self.connect()
@@ -606,6 +618,18 @@ class Data_base:
         finally:
             self.close_connection()
 
+    def delete_link_venda_product(self, index):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(f"DELETE FROM Produtos_Venda WHERE ID = '{index}'")
+            self.connection.commit()
+            return "Sucess", "produto na venda deletado com sucesso!"
+        except Exception as e:
+            print(e)
+            return "Error", str(e)
+        finally:
+            self.close_connection()
     #########################################################################
 
     #########################################################################
@@ -670,6 +694,29 @@ class Data_base:
             )
             self.connection.commit()
             return "Sucess", "Produto Atualizado com sucesso!"
+        except Exception as e:
+            print(e)
+            return "erro", str(e)
+        finally:
+            self.close_connection()
+
+    def update_venda(self, vendaId, fullDataSet):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(
+                f"""UPDATE Vendas
+                SET CLIENTE_ID = '{fullDataSet[0]}',
+                TOTAL = '{fullDataSet[1]}',
+                DATE = '{fullDataSet[2]}',
+                TIPO_PAGAMENTO = '{fullDataSet[3]}',
+                VENCIMENTO = '{fullDataSet[4]}',
+                STATUS = '{fullDataSet[5]}'
+
+                WHERE ID = '{vendaId}'"""
+            )
+            self.connection.commit()
+            return "Sucess", "Venda Atualizada com sucesso!"
         except Exception as e:
             print(e)
             return "erro", str(e)

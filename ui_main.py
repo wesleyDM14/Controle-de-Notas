@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(997, 704)
+        MainWindow.resize(772, 566)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_8 = QGridLayout(self.centralwidget)
@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.toolBox.setObjectName(u"toolBox")
         self.page = QWidget()
         self.page.setObjectName(u"page")
-        self.page.setGeometry(QRect(0, 0, 108, 535))
+        self.page.setGeometry(QRect(0, 0, 108, 397))
         self.verticalLayout_8 = QVBoxLayout(self.page)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.btn_menu_home = QPushButton(self.page)
@@ -108,7 +108,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page, u"Menu")
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
-        self.page_2.setGeometry(QRect(0, 0, 170, 535))
+        self.page_2.setGeometry(QRect(0, 0, 170, 397))
         self.verticalLayout_7 = QVBoxLayout(self.page_2)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.label_8 = QLabel(self.page_2)
@@ -562,6 +562,11 @@ class Ui_MainWindow(object):
         self.btn_remove_venda_register.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_22.addWidget(self.btn_remove_venda_register)
+
+        self.btn_cancel_venda = QPushButton(self.frame_8)
+        self.btn_cancel_venda.setObjectName(u"btn_cancel_venda")
+
+        self.verticalLayout_22.addWidget(self.btn_cancel_venda)
 
         self.verticalSpacer_12 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -1923,6 +1928,7 @@ class Ui_MainWindow(object):
         self.tb_widget_vendas.setTabText(self.tb_widget_vendas.indexOf(self.tb_vendas_list), QCoreApplication.translate("MainWindow", u"Vendas", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"VENDA", None))
         self.btn_remove_venda_register.setText(QCoreApplication.translate("MainWindow", u"Remover", None))
+        self.btn_cancel_venda.setText(QCoreApplication.translate("MainWindow", u"Cancelar", None))
         self.txt_venda_data.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Data de Venda", None))
         self.select_client_venda.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione o Cliente", None))
 

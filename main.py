@@ -214,8 +214,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_remover_produto_compra.clicked.connect(self.remove_product_to_compra)
         ###############################################################
 
+        ###############################################################
+        #CONTATO BTN
         self.btn_contato_fornecedor.clicked.connect(lambda: self.contato_whatsapp_web(''))
         self.btn_contato_cliente.clicked.connect(lambda: self.contato_whatsapp_web(''))
+        ###############################################################
+
+        ###############################################################
+        #RESET EDIT
+        #?
+        self.btn_cancel_venda.clicked.connect(self.reset_edits)
+        ###############################################################
+
+    def reset_edits(self):
+        self.btn_cadastrar_cliente.setText("CADASTRAR")
+        self.btn_cadastrar_cliente.clicked.disconnect()
+        self.btn_cadastrar_cliente.clicked.connect(self.register_client)
+        self.clear_client_qlineedit()
+
+        self.btn_cadastrar_fornecedor.setText("CADASTRAR")
+        self.btn_cadastrar_fornecedor.clicked.disconnect()
+        self.btn_cadastrar_fornecedor.clicked.connect(self.register_fornecedor)
+        self.clear_fornecedor_qlineedit()
+
+        self.btn_cadastrar_produto.setText("CADASTRAR")
+        self.btn_cadastrar_produto.clicked.disconnect()
+        self.btn_cadastrar_produto.clicked.connect(self.register_produto)
+        self.clear_produto_qlineedit()
+
+        self.btn_venda_cadastrar.setText("CADASTRAR")
+        self.btn_venda_cadastrar.clicked.disconnect()
+        self.btn_venda_cadastrar.clicked.connect(self.register_venda)
+        self.clear_vendas_fields()
+
+        self.search_vendas()
+        self.search_produtos_semanal()
+        self.tb_widget_vendas.setCurrentIndex(0)
+        self.clear_vendas_fields()
 
     def anterior_current_year(self):
         temp = int(self.currentYear)
@@ -1059,39 +1094,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.search_compras()
 
     def update_venda(self):
-
         vendaId = self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
 
-        msg = QMessageBox()
-        msg.setWindowTitle("Selecionar Status")
-        msg.setText("Status Atual da Venda/Pedido")
-        msg.addButton("PAGO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("AGUARDANDO PAGAMENTO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("ATRASADO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("CANCELAR", QtWidgets.QMessageBox.RejectRole)
-        resp = msg.exec()
-        
-        status = ''
-        response = ''
+        currentVenda = self.db.select_specific_venda(vendaId=vendaId)
 
-        match resp:
+        currentClient = self.db.select_specific_client(clientId=currentVenda[1])
 
-            case 0:
-                status = 'PAGO'
-                response = self.db.update_venda_status(vendaId, status)
-            case 1:
-                status = 'AGUARDANDO PAGAMENTO'
-                response = self.db.update_venda_status(vendaId, status)
-            case 2:
-                status = 'ATRASADO'
-                response = self.db.update_venda_status(vendaId, status)
-            case _ :
-                return
-        
-        self.msg(response[0], response[1])
-        if response[0].lower() == "sucess":
-            self.search_vendas()
-            self.search_produtos_semanal()
+        self.select_client_venda.setCurrentText(str(currentClient[0]) + '. ' + str(currentClient[2]))
+        self.select_pagamento_venda.setCurrentText(currentVenda[4])
+        self.select_status_venda.setCurrentText(currentVenda[6])
+        self.txt_venda_data.setText(currentVenda[3])
+
+        if currentVenda[4] == 'Prazo':
+            self.txt_venda_vencimento.setText(currentVenda[5])
+
+        productsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+
+        for productInVenda in productsToVenda:
+            currentProduct = self.db.select_specific_product(int(productInVenda[1]))
+            try:
+                currentProductList = (
+                    currentProduct[0],
+                    productInVenda[2],
+                    currentProduct[1],
+                    f"{float(currentProduct[3]):9.2f}",
+                    f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
+                )
+                self.ListProductsVenda.append(currentProductList)
+                self.load_lista_venda_product()
+            except Exception as e:
+                print(e)
+                self.msg("erro", str(e))
+
+        self.btn_venda_cadastrar.setText("EDITAR")
+        self.btn_venda_cadastrar.clicked.disconnect()
+        self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_aux(vendaId))
+
+        self.tb_widget_vendas.setCurrentIndex(1)
 
     def update_client_aux(self):
         fullDataSet = (
@@ -1192,40 +1231,52 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.search_compras()
             self.Pages.setCurrentWidget(self.pg_fornecedores)
 
-    def update_venda_aux(self):
-        vendaId = self.tb_widget_vendas_cliente_detail.selectionModel().currentIndex().siblingAtColumn(0).data()
+    def update_venda_aux(self, vendaId):
+        if len(self.ListProductsVenda) == 0:
+            self.msg("Erro", "Lista de Produtos Vazia")
+        else:
+            clientId = self.select_client_venda.currentText().split(".")
+            totalVenda = 0
 
-        msg = QMessageBox()
-        msg.setWindowTitle("Selecionar Status")
-        msg.setText("Status Atual da Venda/Pedido")
-        msg.addButton("PAGO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("AGUARDANDO PAGAMENTO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("ATRASADO", QtWidgets.QMessageBox.YesRole)
-        msg.addButton("CANCELAR", QtWidgets.QMessageBox.RejectRole)
-        resp = msg.exec()
-        
-        status = ''
-        response = ''
+            for item in self.ListProductsVenda:
+                totalVenda += float(item[4])
 
-        match resp:
+            tipoPagamento = self.select_pagamento_venda.currentText()
 
-            case 0:
-                status = 'PAGO'
-                response = self.db.update_venda_status(vendaId, status)
-            case 1:
-                status = 'AGUARDANDO PAGAMENTO'
-                response = self.db.update_venda_status(vendaId, status)
-            case 2:
-                status = 'ATRASADO'
-                response = self.db.update_venda_status(vendaId, status)
-            case _ :
-                return
-        
-        self.msg(response[0], response[1])
-        if response[0].lower() == "sucess":
-            self.search_vendas()
-            self.search_produtos_semanal()
-            self.Pages.setCurrentWidget(self.pg_clientes)
+            if (tipoPagamento.lower() == 'selecione o tipo de pagamento'):
+                self.msg("Erro", "Selecione o método de pagamento")
+            else:
+                status = self.select_status_venda.currentText()
+                if (status.lower() == 'selecione o status da venda'):
+                    self.msg("Erro", "Indique o STATUS da Venda")
+                else:
+                    dataVencimento = ''
+                    if tipoPagamento.lower() == 'prazo':
+                        dataVencimento = self.txt_venda_vencimento.text()
+
+                    fullDataSet = (int(clientId[0]), totalVenda, self.txt_venda_data.text(), tipoPagamento, dataVencimento, status)
+
+                    response = self.db.update_venda(vendaId=vendaId, fullDataSet=fullDataSet)
+
+                    if response[0].lower() == "sucess":
+
+                        actualProductsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+
+                        for temp in actualProductsToVenda:
+                            result = self.db.delete_link_venda_product(index=temp[0])
+
+                        for item in self.ListProductsVenda:
+                            data = (item[0], item[1], item[4], vendaId)
+                            result = self.db.link_venda_to_product(data)
+
+                        self.msg(response[0], "Venda Atualizada Com sucesso")
+                        self.search_vendas()
+                        self.search_produtos_semanal()
+                        self.btn_venda_cadastrar.setText("CADASTRAR")
+                        self.btn_venda_cadastrar.clicked.disconnect()
+                        self.btn_venda_cadastrar.clicked.connect(self.register_venda)
+                        self.tb_widget_vendas.setCurrentIndex(0)
+                        self.clear_vendas_fields()
 
     def delete_client(self):
         msg = QMessageBox()
@@ -1597,11 +1648,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(
-                                align="left", font="B", text_type="B", height=2, width=2
+                                align="left", font="A", text_type="B"
                             )
                             printer.text(str(productToText[0]).upper() + "\n" + "\n")
                             printer.set(
-                                align="right", font="B", text_type="B", height=2, width=2
+                                align="right", font="A", text_type="B"
                             )
                             printer.text(str(f"{float(productToText[1]):9.2f}"))
                             printer.text(" " + str(productToText[2]))
@@ -1614,7 +1665,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.text("\n--Total--------------------------------------\n")
 
                         printer.set(
-                            align="right", font="B", text_type="B", height=2, width=2
+                            align="right", font="A", text_type="B"
                         )
                         printer.text("\n" + str(f"{float(quantTotalItens):9.2f}"))
                         printer.text(
@@ -1743,11 +1794,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(
-                                align="left", font="B", text_type="B", height=2, width=1
+                                align="left", font="A", text_type="B"
                             )
                             printer.text(str(productToText[0]).upper() + "\n")
                             printer.set(
-                                align="right", font="B", text_type="B", height=2, width=1
+                                align="right", font="A", text_type="B"
                             )
                             printer.text(str(f"{float(productToText[1]):9.2f}"))
                             printer.text(" " + str(productToText[2]))
