@@ -142,7 +142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_edit.clicked.connect(self.update_venda)
         self.btn_compra_editar.clicked.connect(self.update_compra)
         self.btn_editar_compra_fornecedor_detail.clicked.connect(self.update_compra_aux)
-        self.btn_editar_venda_cliente_detail.clicked.connect(self.update_venda_aux)
+        self.btn_editar_venda_cliente_detail.clicked.connect(self.update_venda_client_detail)
         ###############################################################
 
         ###############################################################
@@ -226,6 +226,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_cancel_venda.clicked.connect(self.reset_edits)
         ###############################################################
 
+        ###############################################################
+        #SEARCH IN TABLE
+        self.txt_search_client.textChanged.connect(self.filter_clients)
+        self.txt_search_produtos.textChanged.connect(self.filter_produtos)
+        self.txt_search_fornecedores.textChanged.connect(self.filter_fornecedor)
+        self.txt_vendas_pesquisar.textChanged.connect(self.filter_vendas)
+        self.txt_search_compras.textChanged.connect(self.filter_compras)
+        self.txt_semanal_search.textChanged.connect(self.filter_semanal_supplies)
+        ###############################################################
+
+        ###############################################################
+        #SEARCH IN SELECT (COMBOBOX)
+        self.select_client_venda.setEditable(True)
+        self.select_client_venda.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
+        self.select_client_venda.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
+        self.select_client_venda.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+
+        self.select_produto_venda.setEditable(True)
+        self.select_produto_venda.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
+        self.select_produto_venda.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
+        self.select_produto_venda.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+
+        self.select_compra_fornecedor.setEditable(True)
+        self.select_compra_fornecedor.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
+        self.select_compra_fornecedor.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
+        self.select_compra_fornecedor.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+
+        self.select_compra_produto.setEditable(True)
+        self.select_compra_produto.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
+        self.select_compra_produto.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
+        self.select_compra_produto.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+        ###############################################################
+
     def reset_edits(self):
         self.btn_cadastrar_cliente.setText("CADASTRAR")
         self.btn_cadastrar_cliente.clicked.disconnect()
@@ -251,6 +284,78 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.search_produtos_semanal()
         self.tb_widget_vendas.setCurrentIndex(0)
         self.clear_vendas_fields()
+
+    def filter_clients(self, s):
+        self.tb_clientes.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.tb_clientes.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.tb_clientes.setCurrentItem(item)
+
+    def filter_semanal_supplies(self, s):
+        self.tab_pedido_semana.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.tab_pedido_semana.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.tab_pedido_semana.setCurrentItem(item)
+    
+    def filter_produtos(self, s):
+        self.tb_produtos.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.tb_produtos.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.tb_produtos.setCurrentItem(item)
+    
+    def filter_fornecedor(self, s):
+        self.tb_fornecedores.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.tb_fornecedores.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.tb_fornecedores.setCurrentItem(item)
+
+    def filter_vendas(self, s):
+        self.tb_vendas.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.tb_vendas.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.tb_vendas.setCurrentItem(item)
+
+    def filter_compras(self, s):
+        self.table_compras.setCurrentItem(None)
+
+        if not s:
+            return
+        
+        matching_itens = self.table_compras.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        if matching_itens:
+            item = matching_itens[0]
+            self.table_compras.setCurrentItem(item)
 
     def anterior_current_year(self):
         temp = int(self.currentYear)
@@ -963,7 +1068,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             strDate = strDay + '/' + strMonth + '/' + str(year)
             vendasToDate = self.db.get_vendas_by_date(date=strDate)
             
-            
             for row, text in enumerate(vendasToDate):
                 vendaId = text[0]
                 produtosToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
@@ -999,7 +1103,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             )
             for column, data in enumerate(produto):
                 self.tab_pedido_semana.setItem(row, column, QTableWidgetItem(str(data)))
-
 
     def update_client(self):
         clientId = (
@@ -1093,7 +1196,99 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if response[0].lower() == "sucess":
             self.search_compras()
 
+    def update_venda_client_detail(self):
+        self.ListProductsVenda = []
+        vendaId = self.tb_widget_vendas_cliente_detail.selectionModel().currentIndex().siblingAtColumn(0).data()
+
+        currentVenda = self.db.select_specific_venda(vendaId=vendaId)
+        currentClient = self.db.select_specific_client(clientId=currentVenda[1])
+
+        self.select_client_venda.setCurrentText(str(currentClient[0]) + '. ' + str(currentClient[2]))
+        self.select_pagamento_venda.setCurrentText(currentVenda[4])
+        self.select_status_venda.setCurrentText(currentVenda[6])
+        self.txt_venda_data.setText(currentVenda[3])
+
+        if currentVenda[4] == 'Prazo':
+            self.txt_venda_vencimento.setText(currentVenda[5])
+
+        productsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+
+        for productInVenda in productsToVenda:
+            currentProduct = self.db.select_specific_product(int(productInVenda[1]))
+            try:
+                currentProductList = (
+                    currentProduct[0],
+                    productInVenda[2],
+                    currentProduct[1],
+                    f"{float(currentProduct[3]):9.2f}",
+                    f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
+                )
+                self.ListProductsVenda.append(currentProductList)
+                self.load_lista_venda_product()
+            except Exception as e:
+                print(e)
+                self.msg("erro", str(e))
+
+        self.btn_venda_cadastrar.setText("EDITAR")
+        self.btn_venda_cadastrar.clicked.disconnect()
+        self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_client_detail_aux(vendaId))
+
+        self.Pages.setCurrentWidget(self.pg_vendas)
+        self.tb_widget_vendas.setCurrentIndex(1)
+
+    def update_venda_client_detail_aux(self, vendaId):
+        if len(self.ListProductsVenda) == 0:
+            self.msg("Erro", "Lista de Produtos Vazia")
+        else:
+            clientId = self.select_client_venda.currentText().split(".")
+            totalVenda = 0
+
+            for item in self.ListProductsVenda:
+                totalVenda += float(item[4])
+
+            tipoPagamento = self.select_pagamento_venda.currentText()
+
+            if (tipoPagamento.lower() == 'selecione o tipo de pagamento'):
+                self.msg("Erro", "Selecione o método de pagamento")
+            else:
+                status = self.select_status_venda.currentText()
+                if (status.lower() == 'selecione o status da venda'):
+                    self.msg("Erro", "Indique o STATUS da Venda")
+                else:
+                    dataVencimento = ''
+                    if tipoPagamento.lower() == 'prazo':
+                        dataVencimento = self.txt_venda_vencimento.text()
+
+                    fullDataSet = (int(clientId[0]), totalVenda, self.txt_venda_data.text(), tipoPagamento, dataVencimento, status)
+
+                    response = self.db.update_venda(vendaId=vendaId, fullDataSet=fullDataSet)
+
+                    if response[0].lower() == "sucess":
+
+                        actualProductsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+
+                        for temp in actualProductsToVenda:
+                            result = self.db.delete_link_venda_product(index=temp[0])
+
+                        for item in self.ListProductsVenda:
+                            data = (item[0], item[1], item[4], vendaId)
+                            result = self.db.link_venda_to_product(data)
+
+                        self.msg(response[0], "Venda Atualizada Com sucesso")
+                        self.search_vendas()
+                        self.search_produtos_semanal()
+                        self.search_vendas_to_client(clientId=clientId[0])
+                        self.btn_venda_cadastrar.setText("CADASTRAR")
+                        self.btn_venda_cadastrar.clicked.disconnect()
+                        self.btn_venda_cadastrar.clicked.connect(self.register_venda)
+                        self.tb_widget_vendas.setCurrentIndex(0)
+
+                        self.Pages.setCurrentWidget(self.pg_cliente_detail)
+                        self.tb_widget_client_detail.setCurrentIndex(1)
+                        self.clear_vendas_fields()
+
     def update_venda(self):
+        self.ListProductsVenda = []
         vendaId = self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
 
         currentVenda = self.db.select_specific_venda(vendaId=vendaId)
@@ -1179,8 +1374,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.clear_fornecedor_qlineedit()
 
     def update_produto_aux(self):
+        productId = self.tb_produtos.selectionModel().currentIndex().siblingAtColumn(0).data()
         fullDataSet = (
-            self.tb_produtos.selectionModel().currentIndex().siblingAtColumn(0).data(),
+            productId,
             self.txt_nome_produto.text(),
             self.select_medida_produto.currentText(),
             float(self.txt_preco_produto.text()),
@@ -1190,6 +1386,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.msg(response[0], response[1])
 
         if response[0].lower() == "sucess":
+            vendas_from_current_produto = self.db.get_vendas_by_productId(productId=productId)
+            #edit subtotal when?
+
             self.btn_cadastrar_produto.setText("CADASTRAR")
             self.btn_cadastrar_produto.clicked.disconnect()
             self.btn_cadastrar_produto.clicked.connect(self.register_produto)
@@ -1601,13 +1800,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             uniTemp = "CX"
                         case _:
                             uniTemp = "--"
-
+                
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
 
                 for x in range(2):
                     try:
                         printer = Usb(0x1FC9, 0x2016)
+
+                        printer.charcode('CP860')
 
                         printer.set(
                             align="center", font="A", text_type="B"
@@ -1754,6 +1955,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 for x in range(2):
                     try:
                         printer = Usb(0x1FC9, 0x2016)
+
+                        printer.charcode('CP860')
 
                         printer.set(
                             align="center", font="A", text_type="B"

@@ -749,4 +749,16 @@ class Data_base:
         finally:
             self.close_connection()
 
+    def update_venda_subtotal_produto(self, productId, vendaId, subTotal):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(f"")
+            self.connection.commit()
+            return "Sucess", "Subtotal atualizado com sucesso!"
+        except Exception as e:
+            print(e)
+            return "erro", str(e)
+        finally:
+            self.close_connection()
 #########################################################################
