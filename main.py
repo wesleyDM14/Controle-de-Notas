@@ -564,10 +564,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for aux in productToVendas:
             vendaId = aux[4]
             venda = self.db.select_specific_venda(vendaId=vendaId)
-            dataVenda = str(venda[3]).split("/")
-            if dataVenda[2] == self.currentYear:
-                index = int(dataVenda[1])
-                vendasPerMouth[index] += 1
+            if venda is not None:
+                dataVenda = str(venda[3]).split("/")
+                if dataVenda[2] == self.currentYear:
+                    index = int(dataVenda[1])
+                    vendasPerMouth[index] += 1
 
         series = QLineSeries(self)
 
@@ -589,7 +590,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         y.setLabelFormat("%d")
         y.setTitleText("Nº de Vendas")
         y.setTickType(QValueAxis.TickType.TicksDynamic)
-        y.setTickInterval(1)
+        y.setTickInterval(3)
         chart.addAxis(y, QtCore.Qt.AlignmentFlag.AlignLeft)
 
         series.attachAxis(x)
@@ -1138,11 +1139,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 month = 12
                 year -= 1
 
-        if day < 10:
-            strDay = "0" + str(day)
-        if month < 10:
-            strMonth = "0" + str(month)
-
         dados = {}
 
         for x in range(7):
@@ -1157,6 +1153,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 strDay = "0" + str(day)
             else:
                 strDay = str(day)
+            if month < 10:
+                strMonth = "0" + str(month)
+            else:
+                strMonth = str(month)
             strDate = strDay + "/" + strMonth + "/" + str(year)
             vendasToDate = self.db.get_vendas_by_date(date=strDate)
 
@@ -1525,11 +1525,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     month = 12
                     year -= 1
 
-            if day < 10:
-                strDay = "0" + str(day)
-            if month < 10:
-                strMonth = "0" + str(month)
-
             datas = []
 
             for x in range(7):
@@ -1544,22 +1539,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     strDay = "0" + str(day)
                 else:
                     strDay = str(day)
+
+                if month < 10:
+                    strMonth = "0" + str(month)
+                else:
+                    strMonth = str(month)
+
                 strDate = strDay + "/" + strMonth + "/" + str(year)
                 datas.append(strDate)
                 day += 1
-
             for i, venda in enumerate(vendas_from_current_produto):
-                
-                currentVenda = self.db.select_specific_venda(vendaId=venda[4])
-                for data in datas:
-                    if currentVenda[3] == data:
-                        novoSubTotal = venda[2] * float(self.txt_preco_produto.text())
-                        self.db.update_venda_subtotal_produto(tempId=venda[0], subTotal=novoSubTotal)
-                        novoTotal = 0
-                        attVenda = self.db.get_vendas_by_vendasId(vendaId=currentVenda[0])
-                        for element in attVenda:
-                            novoTotal += element[3]
-                        self.db.update_total_venda(total=novoTotal, vendaId=currentVenda[0])
+                currentVenda = self.db.select_specific_venda(vendaId=int(venda[4]))
+                if (not currentVenda == None):
+                    for data in datas:
+                        if currentVenda[3] == data:
+                            novoSubTotal = venda[2] * float(self.txt_preco_produto.text())
+                            self.db.update_venda_subtotal_produto(tempId=venda[0], subTotal=novoSubTotal)
+                            novoTotal = 0
+                            attVenda = self.db.get_vendas_by_vendasId(vendaId=currentVenda[0])
+                            for element in attVenda:
+                                novoTotal += element[3]
+                            self.db.update_total_venda(total=novoTotal, vendaId=currentVenda[0])
 
             self.btn_cadastrar_produto.setText("CADASTRAR")
             self.btn_cadastrar_produto.clicked.disconnect()
@@ -2070,8 +2070,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Data: " + str(venda[3]) + "\n")
 
-                        printer.set(align="left", text_type="B")
-                        printer.text("Cliente: " + cliente[2] + "\n")
+                        printer.set(align="left", font="B", text_type="B", height=2, width=2)
+                        printer.text("Cliente: " + str(cliente[2]).upper() + "\n")
 
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
@@ -2241,8 +2241,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Data: " + str(venda[3]) + "\n")
 
-                        printer.set(align="left", text_type="B")
-                        printer.text("Cliente: " + cliente[2] + "\n")
+                        printer.set(align="left", font="B", text_type="B", height=2, width=2)
+                        printer.text("Cliente: " + str(cliente[2]).upper() + "\n")
 
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
