@@ -748,13 +748,13 @@ class Data_base:
         finally:
             self.close_connection()
 
-    def update_venda_subtotal_produto(self, productId, vendaId, subTotal):
+    def update_venda_subtotal_produto(self, tempId, subTotal):
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"")
+            cursor.execute(f"UPDATE Produtos_Venda SET PRECO_PARCIAL = '{subTotal}' WHERE ID = '{tempId}'")
             self.connection.commit()
-            return "Sucess", "Subtotal atualizado com sucesso!"
+            print ("Sucess, Subtotal atualizado com sucesso!")
         except Exception as e:
             print(e)
             return "erro", str(e)

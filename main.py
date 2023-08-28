@@ -1506,7 +1506,60 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             vendas_from_current_produto = self.db.get_vendas_by_productId(
                 productId=productId
             )
-            # edit subtotal when?
+            now = datetime.date.today()
+            indice = now.weekday()
+            
+            day = now.day
+            month = now.month
+            year = now.year
+
+            strDay = ""
+            strMonth = ""
+
+            day -= indice
+
+            if day < 0:
+                day = day + 31
+                month -= 1
+                if month == 0:
+                    month = 12
+                    year -= 1
+
+            if day < 10:
+                strDay = "0" + str(day)
+            if month < 10:
+                strMonth = "0" + str(month)
+
+            datas = []
+
+            for x in range(7):
+                if day > 31:
+                    day = 1
+                    month += 1
+                    if month == 13:
+                        month = 1
+                        year += 1
+
+                if day < 10:
+                    strDay = "0" + str(day)
+                else:
+                    strDay = str(day)
+                strDate = strDay + "/" + strMonth + "/" + str(year)
+                datas.append(strDate)
+                day += 1
+
+            for i, venda in enumerate(vendas_from_current_produto):
+                
+                currentVenda = self.db.select_specific_venda(vendaId=venda[4])
+                for data in datas:
+                    if currentVenda[3] == data:
+                        novoSubTotal = venda[2] * float(self.txt_preco_produto.text())
+                        self.db.update_venda_subtotal_produto(tempId=venda[0], subTotal=novoSubTotal)
+                        novoTotal = 0
+                        attVenda = self.db.get_vendas_by_vendasId(vendaId=currentVenda[0])
+                        for element in attVenda:
+                            novoTotal += element[3]
+                        self.db.update_total_venda(total=novoTotal, vendaId=currentVenda[0])
 
             self.btn_cadastrar_produto.setText("CADASTRAR")
             self.btn_cadastrar_produto.clicked.disconnect()
@@ -1989,40 +2042,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
-                    for productToText in produtosPrint:
-                        if str(productToText[0]).lower() == "bobina":
-                            quant, ok = QInputDialog.getText(
-                                self, "Peso da Bobina", "Digite o peso da bobina: "
-                            )
-                            if ok:
-                                vendaTemp = list(venda)
-                                vendaTemp[2] -= productToText[4]
-                                vendaTemp[2] += float(quant) * float(productToText[3])
-                                venda = tuple(vendaTemp)
-                                self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-                                print(
-                                    str(f"{float(productToText[1]):9.2f}")
-                                    + " "
-                                    + str(productToText[2]) + '('+quant+' Kg)'
-                                    + " "
-                                    + str(f"{float(productToText[3]):9.2f}")
-                                    + " "
-                                    + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                    + "\n"
-                                )
-                        else:
-                            print(
-                                str(f"{float(productToText[1]):9.2f}")
-                                + " "
-                                + str(productToText[2])
-                                + " "
-                                + str(f"{float(productToText[3]):9.2f}")
-                                + " "
-                                + str(f"{float(productToText[4]):9.2f}")
-                                + "\n"
-                            )
-                    
-                    print('Total: R$' + str(venda[2]))
                     try:
                         printer = Usb(0x1FC9, 0x2016)
 
@@ -2194,40 +2213,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
-                    for productToText in produtosPrint:
-                        if str(productToText[0]).lower() == "bobina":
-                            quant, ok = QInputDialog.getText(
-                                self, "Peso da Bobina", "Digite o peso da bobina: "
-                            )
-                            if ok:
-                                vendaTemp = list(venda)
-                                vendaTemp[2] -= productToText[4]
-                                vendaTemp[2] += float(quant) * float(productToText[3])
-                                venda = tuple(vendaTemp)
-                                self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-                                print(
-                                    str(f"{float(productToText[1]):9.2f}")
-                                    + " "
-                                    + str(productToText[2]) + '('+quant+' Kg)'
-                                    + " "
-                                    + str(f"{float(productToText[3]):9.2f}")
-                                    + " "
-                                    + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                    + "\n"
-                                )
-                        else:
-                            print(
-                                str(f"{float(productToText[1]):9.2f}")
-                                + " "
-                                + str(productToText[2])
-                                + " "
-                                + str(f"{float(productToText[3]):9.2f}")
-                                + " "
-                                + str(f"{float(productToText[4]):9.2f}")
-                                + "\n"
-                            )
-                    
-                    print('Total: R$' + str(venda[2]))
                     try:
                         printer = Usb(0x1FC9, 0x2016)
 
