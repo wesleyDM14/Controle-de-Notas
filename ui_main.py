@@ -122,6 +122,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem3 = QTableWidgetItem()
         self.table_compras.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.table_compras.setObjectName(u"table_compras")
+        self.table_compras.setSortingEnabled(True)
 
         self.horizontalLayout_8.addWidget(self.table_compras)
 
@@ -608,6 +609,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem18 = QTableWidgetItem()
         self.tab_pedido_semana.setHorizontalHeaderItem(2, __qtablewidgetitem18)
         self.tab_pedido_semana.setObjectName(u"tab_pedido_semana")
+        self.tab_pedido_semana.setSortingEnabled(True)
 
         self.horizontalLayout_19.addWidget(self.tab_pedido_semana)
 
@@ -849,6 +851,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem22 = QTableWidgetItem()
         self.tb_widget_vendas_cliente_detail.setHorizontalHeaderItem(3, __qtablewidgetitem22)
         self.tb_widget_vendas_cliente_detail.setObjectName(u"tb_widget_vendas_cliente_detail")
+        self.tb_widget_vendas_cliente_detail.setSortingEnabled(True)
 
         self.horizontalLayout_13.addWidget(self.tb_widget_vendas_cliente_detail)
 
@@ -928,6 +931,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem26 = QTableWidgetItem()
         self.tb_clientes.setHorizontalHeaderItem(3, __qtablewidgetitem26)
         self.tb_clientes.setObjectName(u"tb_clientes")
+        self.tb_clientes.setSortingEnabled(True)
 
         self.horizontalLayout_4.addWidget(self.tb_clientes)
 
@@ -1084,6 +1088,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem30 = QTableWidgetItem()
         self.tb_fornecedores.setHorizontalHeaderItem(3, __qtablewidgetitem30)
         self.tb_fornecedores.setObjectName(u"tb_fornecedores")
+        self.tb_fornecedores.setSortingEnabled(True)
 
         self.horizontalLayout_5.addWidget(self.tb_fornecedores)
 
@@ -1387,6 +1392,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem34 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem34)
         self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setSortingEnabled(True)
 
         self.horizontalLayout_16.addWidget(self.tableWidget)
 
@@ -1614,6 +1620,7 @@ class Ui_MainWindow(object):
         self.tb_produtos.setHorizontalHeaderItem(3, __qtablewidgetitem38)
         self.tb_produtos.setObjectName(u"tb_produtos")
         self.tb_produtos.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.tb_produtos.setSortingEnabled(True)
 
         self.horizontalLayout_6.addWidget(self.tb_produtos)
 
@@ -1676,6 +1683,8 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.lb_cadastro_produto, 1, 0, 1, 2)
 
         self.select_medida_produto = QComboBox(self.frame_6)
+        self.select_medida_produto.addItem("")
+        self.select_medida_produto.addItem("")
         self.select_medida_produto.addItem("")
         self.select_medida_produto.addItem("")
         self.select_medida_produto.addItem("")
@@ -2142,10 +2151,12 @@ class Ui_MainWindow(object):
         self.txt_nome_produto.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nome", None))
         self.lb_cadastro_produto.setText(QCoreApplication.translate("MainWindow", u"PRODUTO", None))
         self.select_medida_produto.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione a Medida do Produto", None))
-        self.select_medida_produto.setItemText(1, QCoreApplication.translate("MainWindow", u"Kg", None))
-        self.select_medida_produto.setItemText(2, QCoreApplication.translate("MainWindow", u"Saco", None))
-        self.select_medida_produto.setItemText(3, QCoreApplication.translate("MainWindow", u"Unidade", None))
-        self.select_medida_produto.setItemText(4, QCoreApplication.translate("MainWindow", u"Caixa", None))
+        self.select_medida_produto.setItemText(1, QCoreApplication.translate("MainWindow", u"Caixa", None))
+        self.select_medida_produto.setItemText(2, QCoreApplication.translate("MainWindow", u"Fardo", None))
+        self.select_medida_produto.setItemText(3, QCoreApplication.translate("MainWindow", u"Kg", None))
+        self.select_medida_produto.setItemText(4, QCoreApplication.translate("MainWindow", u"Litro", None))
+        self.select_medida_produto.setItemText(5, QCoreApplication.translate("MainWindow", u"Saco", None))
+        self.select_medida_produto.setItemText(6, QCoreApplication.translate("MainWindow", u"Unidade", None))
 
         self.select_medida_produto.setCurrentText(QCoreApplication.translate("MainWindow", u"Selecione a Medida do Produto", None))
         self.txt_preco_produto.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Pre\u00e7o por Medida", None))

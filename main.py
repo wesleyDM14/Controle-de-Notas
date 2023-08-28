@@ -12,6 +12,7 @@ import datetime
 import sys
 import webbrowser
 
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -32,7 +33,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.ListProductsVenda = []
         self.ListProductsCompra = []
-        self.ListProductsSemanal =[]
+        self.ListProductsSemanal = []
 
         self.clienteAtual = None
         self.produtoAtual = None
@@ -142,7 +143,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_edit.clicked.connect(self.update_venda)
         self.btn_compra_editar.clicked.connect(self.update_compra)
         self.btn_editar_compra_fornecedor_detail.clicked.connect(self.update_compra_aux)
-        self.btn_editar_venda_cliente_detail.clicked.connect(self.update_venda_client_detail)
+        self.btn_editar_venda_cliente_detail.clicked.connect(
+            self.update_venda_client_detail
+        )
         ###############################################################
 
         ###############################################################
@@ -153,13 +156,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_excluir.clicked.connect(self.delete_venda)
         self.btn_compra_excluir.clicked.connect(self.delete_compra)
         self.btn_excluir_venda_cliente_detail.clicked.connect(self.delete_venda_aux)
-        self.btn_excluir_compra_fornecedor_detail.clicked.connect(self.delete_compra_aux)
+        self.btn_excluir_compra_fornecedor_detail.clicked.connect(
+            self.delete_compra_aux
+        )
         ###############################################################
 
         ###############################################################
         # IMPRIMIR NOTA DE CONFERENCIA
         self.btn_venda_print.clicked.connect(self.printer_venda)
-        self.btn_imprimir_venda_cliente_detail.clicked.connect(self.printer_venda_detail)
+        self.btn_imprimir_venda_cliente_detail.clicked.connect(
+            self.printer_venda_detail
+        )
         ###############################################################
 
         ###############################################################
@@ -167,14 +174,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tb_clientes.clicked.connect(self.clicked_client)
         self.tb_fornecedores.clicked.connect(self.clicked_fornecedor)
         self.tb_produtos.clicked.connect(self.clicked_produto)
-        #clicked venda?
-        #clicked compra?
+        # clicked venda?
+        # clicked compra?
         ###############################################################
 
         ###############################################################
-        #get today and set mask
+        # get today and set mask
         self.strToday = self.today.strftime("%d/%m/%Y")
-        dateAux = self.strToday.split('/')
+        dateAux = self.strToday.split("/")
         self.currentYear = dateAux[2]
         self.currentDay = dateAux[0]
         self.currentMonth = dateAux[1]
@@ -188,10 +195,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         ###############################################################
         # MUDANÇA DE DATA
-        self.btn_anterior_ano_fornecedor_detail.clicked.connect(self.anterior_current_year)
+        self.btn_anterior_ano_fornecedor_detail.clicked.connect(
+            self.anterior_current_year
+        )
         self.btn_anterior_graph_cliente.clicked.connect(self.anterior_current_year)
         self.btn_anterior_graph_produto.clicked.connect(self.anterior_current_year)
-        self.btn_proximo_ano_fornecedor_detail.clicked.connect(self.proximo_current_year)
+        self.btn_proximo_ano_fornecedor_detail.clicked.connect(
+            self.proximo_current_year
+        )
         self.btn_proximo_graph_cliente.clicked.connect(self.proximo_current_year)
         self.btn_proximo_graph_produto.clicked.connect(self.proximo_current_year)
         ###############################################################
@@ -215,19 +226,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ###############################################################
 
         ###############################################################
-        #CONTATO BTN
-        self.btn_contato_fornecedor.clicked.connect(lambda: self.contato_whatsapp_web(''))
-        self.btn_contato_cliente.clicked.connect(lambda: self.contato_whatsapp_web(''))
+        # CONTATO BTN
+        self.btn_contato_fornecedor.clicked.connect(
+            lambda: self.contato_whatsapp_web("")
+        )
+        self.btn_contato_cliente.clicked.connect(lambda: self.contato_whatsapp_web(""))
         ###############################################################
 
         ###############################################################
-        #RESET EDIT
-        #?
+        # RESET EDIT
+        # ?
         self.btn_cancel_venda.clicked.connect(self.reset_edits)
         ###############################################################
 
         ###############################################################
-        #SEARCH IN TABLE
+        # SEARCH IN TABLE
         self.txt_search_client.textChanged.connect(self.filter_clients)
         self.txt_search_produtos.textChanged.connect(self.filter_produtos)
         self.txt_search_fornecedores.textChanged.connect(self.filter_fornecedor)
@@ -237,27 +250,75 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ###############################################################
 
         ###############################################################
-        #SEARCH IN SELECT (COMBOBOX)
+        # SEARCH IN SELECT (COMBOBOX)
         self.select_client_venda.setEditable(True)
-        self.select_client_venda.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
-        self.select_client_venda.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
-        self.select_client_venda.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+        self.select_client_venda.setInsertPolicy(
+            QtWidgets.QComboBox.InsertPolicy.NoInsert
+        )
+        self.select_client_venda.completer().setFilterMode(
+            QtCore.Qt.MatchFlag.MatchContains
+        )
+        self.select_client_venda.completer().setCompletionMode(
+            QtWidgets.QCompleter.CompletionMode.PopupCompletion
+        )
 
         self.select_produto_venda.setEditable(True)
-        self.select_produto_venda.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
-        self.select_produto_venda.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
-        self.select_produto_venda.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+        self.select_produto_venda.setInsertPolicy(
+            QtWidgets.QComboBox.InsertPolicy.NoInsert
+        )
+        self.select_produto_venda.completer().setFilterMode(
+            QtCore.Qt.MatchFlag.MatchContains
+        )
+        self.select_produto_venda.completer().setCompletionMode(
+            QtWidgets.QCompleter.CompletionMode.PopupCompletion
+        )
 
         self.select_compra_fornecedor.setEditable(True)
-        self.select_compra_fornecedor.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
-        self.select_compra_fornecedor.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
-        self.select_compra_fornecedor.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+        self.select_compra_fornecedor.setInsertPolicy(
+            QtWidgets.QComboBox.InsertPolicy.NoInsert
+        )
+        self.select_compra_fornecedor.completer().setFilterMode(
+            QtCore.Qt.MatchFlag.MatchContains
+        )
+        self.select_compra_fornecedor.completer().setCompletionMode(
+            QtWidgets.QCompleter.CompletionMode.PopupCompletion
+        )
 
         self.select_compra_produto.setEditable(True)
-        self.select_compra_produto.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
-        self.select_compra_produto.completer().setFilterMode(QtCore.Qt.MatchFlag.MatchContains)
-        self.select_compra_produto.completer().setCompletionMode(QtWidgets.QCompleter.CompletionMode.PopupCompletion)
+        self.select_compra_produto.setInsertPolicy(
+            QtWidgets.QComboBox.InsertPolicy.NoInsert
+        )
+        self.select_compra_produto.completer().setFilterMode(
+            QtCore.Qt.MatchFlag.MatchContains
+        )
+        self.select_compra_produto.completer().setCompletionMode(
+            QtWidgets.QCompleter.CompletionMode.PopupCompletion
+        )
         ###############################################################
+
+        ###############################################################
+        #EDIT QUANT VENDA TABLE
+        self.tb_vendas_itens.doubleClicked.connect(self.edit_iten_in_list_venda)
+        ###############################################################
+
+    def edit_iten_in_list_venda(self):
+        self.tb_vendas_itens.itemChanged.connect(self.edit_item_in_list_aux)
+
+    def edit_item_in_list_aux(self):
+        self.tb_vendas_itens.itemChanged.disconnect()
+        produtoNome = self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(1).data()
+        novaQuant = self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(0).data()
+        novoSubTotal = float(novaQuant) * float(self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(2).data())
+
+        for i, produto in enumerate(self.ListProductsVenda):
+            produtoTemp = list(produto)
+            if (produtoNome == produtoTemp[2]):
+                produtoTemp[1] = float(novaQuant)
+                produtoTemp[4] =  f"{float(novoSubTotal):9.2f}"
+                self.ListProductsVenda[i] = tuple(produtoTemp)
+                break
+        self.tb_vendas_itens.clear()
+        self.load_lista_venda_product()
 
     def reset_edits(self):
         self.btn_cadastrar_cliente.setText("CADASTRAR")
@@ -290,8 +351,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if not s:
             return
-        
-        matching_itens = self.tb_clientes.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        matching_itens = self.tb_clientes.findItems(
+            s, QtCore.Qt.MatchFlag.MatchContains
+        )
 
         if matching_itens:
             item = matching_itens[0]
@@ -302,32 +365,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if not s:
             return
-        
-        matching_itens = self.tab_pedido_semana.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        matching_itens = self.tab_pedido_semana.findItems(
+            s, QtCore.Qt.MatchFlag.MatchContains
+        )
 
         if matching_itens:
             item = matching_itens[0]
             self.tab_pedido_semana.setCurrentItem(item)
-    
+
     def filter_produtos(self, s):
         self.tb_produtos.setCurrentItem(None)
 
         if not s:
             return
-        
-        matching_itens = self.tb_produtos.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        matching_itens = self.tb_produtos.findItems(
+            s, QtCore.Qt.MatchFlag.MatchContains
+        )
 
         if matching_itens:
             item = matching_itens[0]
             self.tb_produtos.setCurrentItem(item)
-    
+
     def filter_fornecedor(self, s):
         self.tb_fornecedores.setCurrentItem(None)
 
         if not s:
             return
-        
-        matching_itens = self.tb_fornecedores.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        matching_itens = self.tb_fornecedores.findItems(
+            s, QtCore.Qt.MatchFlag.MatchContains
+        )
 
         if matching_itens:
             item = matching_itens[0]
@@ -338,7 +407,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if not s:
             return
-        
+
         matching_itens = self.tb_vendas.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
 
         if matching_itens:
@@ -350,8 +419,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if not s:
             return
-        
-        matching_itens = self.table_compras.findItems(s, QtCore.Qt.MatchFlag.MatchContains)
+
+        matching_itens = self.table_compras.findItems(
+            s, QtCore.Qt.MatchFlag.MatchContains
+        )
 
         if matching_itens:
             item = matching_itens[0]
@@ -374,21 +445,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.create_venda_line_chart(clientId=self.clienteAtual)
 
     def contato_whatsapp_web(self, telefone):
-        webbrowser.open('https://whatsa.me/55' + str(telefone))
+        webbrowser.open("https://whatsa.me/55" + str(telefone))
 
     def create_venda_line_chart(self, clientId):
-
         self.lb_ano_graph_cliente.setText(str(self.currentYear))
 
         for i in reversed(range(self.gridLayout_9.count())):
-            self.gridLayout_9.itemAt(i).widget().setParent(None)              
+            self.gridLayout_9.itemAt(i).widget().setParent(None)
 
         vendasPerMouth = [0] * 13
 
         vendas = self.db.get_vendas_by_clientId(clientId)
 
         for venda in vendas:
-            dataVenda = str(venda[3]).split('/')
+            dataVenda = str(venda[3]).split("/")
             if dataVenda[2] == self.currentYear:
                 index = int(dataVenda[1])
                 vendasPerMouth[index] += 1
@@ -397,7 +467,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         for x in range(12):
             series.append(x, vendasPerMouth[x])
-        
+
         chart = QChart()
         chart.addSeries(series)
 
@@ -411,7 +481,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         y = QValueAxis()
         y.setLabelFormat("%d")
-        y.setTitleText('Nº de Pedidos')
+        y.setTitleText("Nº de Pedidos")
         y.setTickType(QValueAxis.TickType.TicksDynamic)
         y.setTickInterval(1)
         chart.addAxis(y, QtCore.Qt.AlignmentFlag.AlignLeft)
@@ -426,20 +496,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.chartView = QChartView(chart)
 
         self.gridLayout_9.addWidget(self.chartView)
-        self.frame_graph_cliente.setStyleSheet(u"background-color: transparent")
+        self.frame_graph_cliente.setStyleSheet("background-color: transparent")
 
     def create_compra_line_chart(self, fornecedorId):
         self.lb_ano_fornecedor_detail.setText(str(self.currentYear))
 
         for i in reversed(range(self.gridLayout_12.count())):
-            self.gridLayout_12.itemAt(i).widget().setParent(None)              
+            self.gridLayout_12.itemAt(i).widget().setParent(None)
 
         comprasPerMouth = [0] * 13
 
         compras = self.db.get_compras_by_fornecedoId(fornecedorId)
 
         for compra in compras:
-            dataCompra = str(compra[3]).split('/')
+            dataCompra = str(compra[3]).split("/")
             if dataCompra[2] == self.currentYear:
                 index = int(dataCompra[1])
                 comprasPerMouth[index] += 1
@@ -448,7 +518,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         for x in range(12):
             series.append(x, comprasPerMouth[x])
-        
+
         chart = QChart()
         chart.addSeries(series)
 
@@ -462,7 +532,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         y = QValueAxis()
         y.setLabelFormat("%d")
-        y.setTitleText('Nº de Pedidos')
+        y.setTitleText("Nº de Pedidos")
         y.setTickType(QValueAxis.TickType.TicksDynamic)
         y.setTickInterval(1)
         chart.addAxis(y, QtCore.Qt.AlignmentFlag.AlignLeft)
@@ -477,13 +547,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.chartView = QChartView(chart)
 
         self.gridLayout_12.addWidget(self.chartView)
-        self.frame_graph_fornecedor_detail.setStyleSheet(u"background-color: transparent")
+        self.frame_graph_fornecedor_detail.setStyleSheet(
+            "background-color: transparent"
+        )
 
     def create_produto_line_chart(self, produtoId):
         self.lb_ano_graph_produto.setText(str(self.currentYear))
 
         for i in reversed(range(self.gridLayout_15.count())):
-            self.gridLayout_15.itemAt(i).widget().setParent(None)              
+            self.gridLayout_15.itemAt(i).widget().setParent(None)
 
         vendasPerMouth = [0] * 13
 
@@ -492,7 +564,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for aux in productToVendas:
             vendaId = aux[4]
             venda = self.db.select_specific_venda(vendaId=vendaId)
-            dataVenda = str(venda[3]).split('/')
+            dataVenda = str(venda[3]).split("/")
             if dataVenda[2] == self.currentYear:
                 index = int(dataVenda[1])
                 vendasPerMouth[index] += 1
@@ -501,7 +573,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         for x in range(12):
             series.append(x, vendasPerMouth[x])
-        
+
         chart = QChart()
         chart.addSeries(series)
 
@@ -515,7 +587,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         y = QValueAxis()
         y.setLabelFormat("%d")
-        y.setTitleText('Nº de Vendas')
+        y.setTitleText("Nº de Vendas")
         y.setTickType(QValueAxis.TickType.TicksDynamic)
         y.setTickInterval(1)
         chart.addAxis(y, QtCore.Qt.AlignmentFlag.AlignLeft)
@@ -530,7 +602,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.chartView = QChartView(chart)
 
         self.gridLayout_15.addWidget(self.chartView)
-        self.frame_graph_produto.setStyleSheet(u"background-color: transparent")
+        self.frame_graph_produto.setStyleSheet("background-color: transparent")
 
     def change_venda_label(self):
         temp = self.select_produto_venda.currentText()
@@ -540,7 +612,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.lb_vendas_medida.setText("Medida: " + str(currentProduct[2]))
         else:
             self.lb_vendas_medida.setText("Medida: ")
-    
+
     def change_compra_label(self):
         temp = self.select_compra_produto.currentText()
         if temp != "Selecione um Produto":
@@ -654,7 +726,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if resp == QMessageBox.Yes:
             self.ListProductsCompra.pop(
-                int(self.tb_produtos_compra_widget.selectionModel().currentIndex().row())
+                int(
+                    self.tb_produtos_compra_widget.selectionModel().currentIndex().row()
+                )
             )
             self.load_lista_compra_product()
 
@@ -680,7 +754,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for row, text in enumerate(self.ListProductsCompra):
             product = (text[1], text[2], text[3], text[4])
             for column, data in enumerate(product):
-                self.tb_produtos_compra_widget.setItem(row, column, QTableWidgetItem(str(data)))
+                self.tb_produtos_compra_widget.setItem(
+                    row, column, QTableWidgetItem(str(data))
+                )
 
         totalTmp = 0
         for item in self.ListProductsCompra:
@@ -727,7 +803,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.select_compra_fornecedor.addItem("Selecione o Fornecedor")
         fornecedores = self.db.select_all_fornecedores()
         for row, text in enumerate(fornecedores):
-            fornecedor = str(text[0]) + '.' + text[1]
+            fornecedor = str(text[0]) + "." + text[1]
             self.select_compra_fornecedor.addItem(str(fornecedor))
 
     def register_client(self):
@@ -762,18 +838,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             tipoPagamento = self.select_pagamento_venda.currentText()
 
-            if (tipoPagamento.lower() == 'selecione o tipo de pagamento'):
+            if tipoPagamento.lower() == "selecione o tipo de pagamento":
                 self.msg("Erro", "Selecione o método de pagamento")
             else:
                 status = self.select_status_venda.currentText()
-                if (status.lower() == 'selecione o status da venda'):
+                if status.lower() == "selecione o status da venda":
                     self.msg("Erro", "Indique o STATUS da Venda")
                 else:
-                    dataVencimento = ''
-                    if tipoPagamento.lower() == 'prazo':
+                    dataVencimento = ""
+                    if tipoPagamento.lower() == "prazo":
                         dataVencimento = self.txt_venda_vencimento.text()
 
-                    fullDataSet = (int(clientId[0]), totalVenda, self.txt_venda_data.text(), tipoPagamento, dataVencimento, status)
+                    fullDataSet = (
+                        int(clientId[0]),
+                        totalVenda,
+                        self.txt_venda_data.text(),
+                        tipoPagamento,
+                        dataVencimento,
+                        status,
+                    )
 
                     response = self.db.register_venda(fullDataSet)
 
@@ -823,7 +906,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         except Exception as e:
             self.msg("Erro", str(e))
-    
+
     def register_compra(self):
         if len(self.ListProductsCompra) == 0:
             self.msg("Erro", "Lista de Produtos Vazia")
@@ -836,18 +919,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             tipoPagamento = self.select_compra_pagamento.currentText()
 
-            if (tipoPagamento.lower() == 'forma de pagamento'):
+            if tipoPagamento.lower() == "forma de pagamento":
                 self.msg("Erro", "Selecione o método de pagamento")
             else:
                 status = self.select_compra_status.currentText()
-                if (status.lower() == 'status da compra'):
+                if status.lower() == "status da compra":
                     self.msg("Erro", "Indique o STATUS da compra")
                 else:
-                    dataVencimento = ''
-                    if tipoPagamento.lower() == 'prazo':
+                    dataVencimento = ""
+                    if tipoPagamento.lower() == "prazo":
                         dataVencimento = self.txt_compra_vencimento.text()
 
-                    fullDataSet = (int(fornecedorId[0]), totalCompra, self.txt_compra_data.text(), tipoPagamento, dataVencimento, status)
+                    fullDataSet = (
+                        int(fornecedorId[0]),
+                        totalCompra,
+                        self.txt_compra_data.text(),
+                        tipoPagamento,
+                        dataVencimento,
+                        status,
+                    )
 
                     response = self.db.register_compra(fullDataSet)
 
@@ -892,7 +982,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.txt_nome_produto.clear()
         self.txt_preco_produto.clear()
         self.select_medida_produto.setCurrentIndex(0)
-    
+
     def clear_compra_qlineedit(self):
         self.txt_compra_quant.clear()
         self.ListProductsCompra = []
@@ -914,7 +1004,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif type.lower() == "aviso":
             msgbox.setIcon(QMessageBox.Warning)
         msgbox.setText(mensage)
-        msgbox.setWindowTitle('Atencao')
+        msgbox.setWindowTitle("Atencao")
         msgbox.exec()
 
     def search_clients(self):
@@ -933,34 +1023,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.get_vendas_by_clientId(clientId)
         self.tb_widget_vendas_cliente_detail.clearContents()
         self.tb_widget_vendas_cliente_detail.setRowCount(len(result))
-        status = ''
+        status = ""
 
         for row, text in enumerate(result):
             status = text[6]
-            if (text[5] != '' and text[6] != 'PAGO'):
-                dataVencimento = datetime.datetime.strptime(text[5], '%d/%m/%Y').date()
+            if text[5] != "" and text[6] != "PAGO":
+                dataVencimento = datetime.datetime.strptime(text[5], "%d/%m/%Y").date()
                 if int(dataVencimento < self.today):
-                    self.db.update_venda_status(text[0], status='ATRASADO')
-                    status = 'ATRASADO'
+                    self.db.update_venda_status(text[0], status="ATRASADO")
+                    status = "ATRASADO"
 
             vendaToTable = (text[0], text[3], text[2], status)
 
             for column, data in enumerate(vendaToTable):
-                self.tb_widget_vendas_cliente_detail.setItem(row, column, QTableWidgetItem(str(data)))
+                self.tb_widget_vendas_cliente_detail.setItem(
+                    row, column, QTableWidgetItem(str(data))
+                )
 
     def search_compras_to_fornecedor(self, fornecedorId):
         result = self.db.get_compras_by_fornecedoId(fornecedorId)
         self.tableWidget.clearContents()
         self.tableWidget.setRowCount(len(result))
-        status = ''
+        status = ""
 
         for row, text in enumerate(result):
             status = text[6]
-            if (text[5] != '' and text[6] != 'PAGO'):
-                dataVencimento = datetime.datetime.strptime(text[5], '%d/%m/%Y').date()
+            if text[5] != "" and text[6] != "PAGO":
+                dataVencimento = datetime.datetime.strptime(text[5], "%d/%m/%Y").date()
                 if int(dataVencimento < self.today):
-                    self.db.update_venda_status(text[0], status='ATRASADO')
-                    status = 'ATRASADO'
+                    self.db.update_venda_status(text[0], status="ATRASADO")
+                    status = "ATRASADO"
             compraToTable = (text[0], text[3], text[2], status)
             for column, data in enumerate(compraToTable):
                 self.tableWidget.setItem(row, column, QTableWidgetItem(str(data)))
@@ -969,18 +1061,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.select_all_vendas()
         self.tb_vendas.clearContents()
         self.tb_vendas.setRowCount(len(result))
-        status = ''
+        status = ""
 
         for row, text in enumerate(result):
-            status = text[6] 
-            if (text[5] != '' and text[6] != 'PAGO'):
-                dataVencimento = datetime.datetime.strptime(text[5], '%d/%m/%Y').date()
+            status = text[6]
+            if text[5] != "" and text[6] != "PAGO":
+                dataVencimento = datetime.datetime.strptime(text[5], "%d/%m/%Y").date()
                 if int(dataVencimento < self.today):
-                    self.db.update_venda_status(text[0], status='ATRASADO')
-                    status = 'ATRASADO'
+                    self.db.update_venda_status(text[0], status="ATRASADO")
+                    status = "ATRASADO"
             clientName = self.db.select_specific_client(text[1])
             vendaToTable = (text[0], clientName[2], text[3], status)
-                
+
             for column, data in enumerate(vendaToTable):
                 self.tb_vendas.setItem(row, column, QTableWidgetItem(str(data)))
 
@@ -1009,15 +1101,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.select_all_compras()
         self.table_compras.clearContents()
         self.table_compras.setRowCount(len(result))
-        status = ''
+        status = ""
 
         for row, text in enumerate(result):
             status = text[6]
-            if (text[5] != '' and text[6] != 'PAGO'):
-                dataVencimento = datetime.datetime.strptime(text[5], '%d/%m/%Y').date()
+            if text[5] != "" and text[6] != "PAGO":
+                dataVencimento = datetime.datetime.strptime(text[5], "%d/%m/%Y").date()
                 if int(dataVencimento < self.today):
-                    self.db.update_venda_status(text[0], status='ATRASADO')
-                    status = 'ATRASADO'
+                    self.db.update_venda_status(text[0], status="ATRASADO")
+                    status = "ATRASADO"
 
             fornecedorName = self.db.select_specific_fornecedor(text[1])
             compraToTable = (text[0], fornecedorName[1], text[3], status)
@@ -1034,22 +1126,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         month = now.month
         year = now.year
 
-        strDay = ''
-        strMonth = ''
+        strDay = ""
+        strMonth = ""
 
         day -= indice
 
-        if day < 0 :
+        if day < 0:
             day = day + 31
             month -= 1
-            if (month == 0):
+            if month == 0:
                 month = 12
                 year -= 1
 
-        if (day < 10):
-            strDay = '0'+str(day)
-        if (month < 10):
-            strMonth = '0'+str(month)
+        if day < 10:
+            strDay = "0" + str(day)
+        if month < 10:
+            strMonth = "0" + str(month)
 
         dados = {}
 
@@ -1061,46 +1153,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     month = 1
                     year += 1
 
-            if (day < 10):
-                strDay = '0'+str(day)
+            if day < 10:
+                strDay = "0" + str(day)
             else:
                 strDay = str(day)
-            strDate = strDay + '/' + strMonth + '/' + str(year)
+            strDate = strDay + "/" + strMonth + "/" + str(year)
             vendasToDate = self.db.get_vendas_by_date(date=strDate)
-            
+
             for row, text in enumerate(vendasToDate):
                 vendaId = text[0]
                 produtosToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
-                nomeProduto = ''
+                nomeProduto = ""
                 quantidadeProduto = 0
-                medidaProduto = ''
+                medidaProduto = ""
 
                 for produto in produtosToVenda:
                     produtoId = produto[1]
-                    currentProduto = self.db.select_specific_product(productId=produtoId)
+                    currentProduto = self.db.select_specific_product(
+                        productId=produtoId
+                    )
                     nomeProduto = currentProduto[1]
                     medidaProduto = currentProduto[2]
                     quantidadeProduto = produto[2]
-                        
-                    key = nomeProduto + '/' + medidaProduto
+
+                    key = nomeProduto + "/" + medidaProduto
 
                     if key in dados:
                         dados[key] += quantidadeProduto
                     else:
                         dados[key] = quantidadeProduto
             day = day + 1
-        
+
         keys = dados.keys()
 
         self.tab_pedido_semana.setRowCount(len(dados))
 
         for row, text in enumerate(keys):
-            keySplit = text.split('/')
-            produto = (
-                keySplit[0],
-                keySplit[1],
-                dados[text]
-            )
+            keySplit = text.split("/")
+            produto = (keySplit[0], keySplit[1], dados[text])
             for column, data in enumerate(produto):
                 self.tab_pedido_semana.setItem(row, column, QTableWidgetItem(str(data)))
 
@@ -1164,7 +1254,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tb_widget_produtos.setCurrentIndex(1)
 
     def update_compra(self):
-        compraId = self.table_compras.selectionModel().currentIndex().siblingAtColumn(0).data()
+        compraId = (
+            self.table_compras.selectionModel().currentIndex().siblingAtColumn(0).data()
+        )
 
         msg = QMessageBox()
         msg.setWindowTitle("Selecionar Status")
@@ -1174,41 +1266,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         msg.addButton("ATRASADO", QtWidgets.QMessageBox.YesRole)
         msg.addButton("CANCELAR", QtWidgets.QMessageBox.RejectRole)
         resp = msg.exec()
-        
-        status = ''
-        response = ''
+
+        status = ""
+        response = ""
 
         match resp:
-
             case 0:
-                status = 'PAGO'
+                status = "PAGO"
                 response = self.db.update_compra_status(compraId, status)
             case 1:
-                status = 'AGUARDANDO PAGAMENTO'
+                status = "AGUARDANDO PAGAMENTO"
                 response = self.db.update_compra_status(compraId, status)
             case 2:
-                status = 'ATRASADO'
+                status = "ATRASADO"
                 response = self.db.update_compra_status(compraId, status)
-            case _ :
+            case _:
                 return
-        
+
         self.msg(response[0], response[1])
         if response[0].lower() == "sucess":
             self.search_compras()
 
     def update_venda_client_detail(self):
         self.ListProductsVenda = []
-        vendaId = self.tb_widget_vendas_cliente_detail.selectionModel().currentIndex().siblingAtColumn(0).data()
+        vendaId = (
+            self.tb_widget_vendas_cliente_detail.selectionModel()
+            .currentIndex()
+            .siblingAtColumn(0)
+            .data()
+        )
 
         currentVenda = self.db.select_specific_venda(vendaId=vendaId)
         currentClient = self.db.select_specific_client(clientId=currentVenda[1])
 
-        self.select_client_venda.setCurrentText(str(currentClient[0]) + '. ' + str(currentClient[2]))
+        self.select_client_venda.setCurrentText(
+            str(currentClient[0]) + ". " + str(currentClient[2])
+        )
         self.select_pagamento_venda.setCurrentText(currentVenda[4])
         self.select_status_venda.setCurrentText(currentVenda[6])
         self.txt_venda_data.setText(currentVenda[3])
 
-        if currentVenda[4] == 'Prazo':
+        if currentVenda[4] == "Prazo":
             self.txt_venda_vencimento.setText(currentVenda[5])
 
         productsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
@@ -1231,7 +1329,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.btn_venda_cadastrar.setText("EDITAR")
         self.btn_venda_cadastrar.clicked.disconnect()
-        self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_client_detail_aux(vendaId))
+        self.btn_venda_cadastrar.clicked.connect(
+            lambda: self.update_venda_client_detail_aux(vendaId)
+        )
 
         self.Pages.setCurrentWidget(self.pg_vendas)
         self.tb_widget_vendas.setCurrentIndex(1)
@@ -1248,24 +1348,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             tipoPagamento = self.select_pagamento_venda.currentText()
 
-            if (tipoPagamento.lower() == 'selecione o tipo de pagamento'):
+            if tipoPagamento.lower() == "selecione o tipo de pagamento":
                 self.msg("Erro", "Selecione o método de pagamento")
             else:
                 status = self.select_status_venda.currentText()
-                if (status.lower() == 'selecione o status da venda'):
+                if status.lower() == "selecione o status da venda":
                     self.msg("Erro", "Indique o STATUS da Venda")
                 else:
-                    dataVencimento = ''
-                    if tipoPagamento.lower() == 'prazo':
+                    dataVencimento = ""
+                    if tipoPagamento.lower() == "prazo":
                         dataVencimento = self.txt_venda_vencimento.text()
 
-                    fullDataSet = (int(clientId[0]), totalVenda, self.txt_venda_data.text(), tipoPagamento, dataVencimento, status)
+                    fullDataSet = (
+                        int(clientId[0]),
+                        totalVenda,
+                        self.txt_venda_data.text(),
+                        tipoPagamento,
+                        dataVencimento,
+                        status,
+                    )
 
-                    response = self.db.update_venda(vendaId=vendaId, fullDataSet=fullDataSet)
+                    response = self.db.update_venda(
+                        vendaId=vendaId, fullDataSet=fullDataSet
+                    )
 
                     if response[0].lower() == "sucess":
-
-                        actualProductsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+                        actualProductsToVenda = self.db.get_vendas_by_vendasId(
+                            vendaId=vendaId
+                        )
 
                         for temp in actualProductsToVenda:
                             result = self.db.delete_link_venda_product(index=temp[0])
@@ -1289,18 +1399,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def update_venda(self):
         self.ListProductsVenda = []
-        vendaId = self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
+        vendaId = (
+            self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
+        )
 
         currentVenda = self.db.select_specific_venda(vendaId=vendaId)
 
         currentClient = self.db.select_specific_client(clientId=currentVenda[1])
 
-        self.select_client_venda.setCurrentText(str(currentClient[0]) + '. ' + str(currentClient[2]))
+        self.select_client_venda.setCurrentText(
+            str(currentClient[0]) + ". " + str(currentClient[2])
+        )
         self.select_pagamento_venda.setCurrentText(currentVenda[4])
         self.select_status_venda.setCurrentText(currentVenda[6])
         self.txt_venda_data.setText(currentVenda[3])
 
-        if currentVenda[4] == 'Prazo':
+        if currentVenda[4] == "Prazo":
             self.txt_venda_vencimento.setText(currentVenda[5])
 
         productsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
@@ -1324,6 +1438,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_cadastrar.setText("EDITAR")
         self.btn_venda_cadastrar.clicked.disconnect()
         self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_aux(vendaId))
+        self.lb_venda_total.setText(str(currentVenda[2]))
 
         self.tb_widget_vendas.setCurrentIndex(1)
 
@@ -1374,7 +1489,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.clear_fornecedor_qlineedit()
 
     def update_produto_aux(self):
-        productId = self.tb_produtos.selectionModel().currentIndex().siblingAtColumn(0).data()
+        productId = (
+            self.tb_produtos.selectionModel().currentIndex().siblingAtColumn(0).data()
+        )
         fullDataSet = (
             productId,
             self.txt_nome_produto.text(),
@@ -1386,8 +1503,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.msg(response[0], response[1])
 
         if response[0].lower() == "sucess":
-            vendas_from_current_produto = self.db.get_vendas_by_productId(productId=productId)
-            #edit subtotal when?
+            vendas_from_current_produto = self.db.get_vendas_by_productId(
+                productId=productId
+            )
+            # edit subtotal when?
 
             self.btn_cadastrar_produto.setText("CADASTRAR")
             self.btn_cadastrar_produto.clicked.disconnect()
@@ -1397,7 +1516,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.clear_produto_qlineedit()
 
     def update_compra_aux(self):
-        compraId = self.tableWidget.selectionModel().currentIndex().siblingAtColumn(0).data()
+        compraId = (
+            self.tableWidget.selectionModel().currentIndex().siblingAtColumn(0).data()
+        )
 
         msg = QMessageBox()
         msg.setWindowTitle("Selecionar Status")
@@ -1407,24 +1528,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         msg.addButton("ATRASADO", QtWidgets.QMessageBox.YesRole)
         msg.addButton("CANCELAR", QtWidgets.QMessageBox.RejectRole)
         resp = msg.exec()
-        
-        status = ''
-        response = ''
+
+        status = ""
+        response = ""
 
         match resp:
-
             case 0:
-                status = 'PAGO'
+                status = "PAGO"
                 response = self.db.update_compra_status(compraId, status)
             case 1:
-                status = 'AGUARDANDO PAGAMENTO'
+                status = "AGUARDANDO PAGAMENTO"
                 response = self.db.update_compra_status(compraId, status)
             case 2:
-                status = 'ATRASADO'
+                status = "ATRASADO"
                 response = self.db.update_compra_status(compraId, status)
-            case _ :
+            case _:
                 return
-        
+
         self.msg(response[0], response[1])
         if response[0].lower() == "sucess":
             self.search_compras()
@@ -1442,24 +1562,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             tipoPagamento = self.select_pagamento_venda.currentText()
 
-            if (tipoPagamento.lower() == 'selecione o tipo de pagamento'):
+            if tipoPagamento.lower() == "selecione o tipo de pagamento":
                 self.msg("Erro", "Selecione o método de pagamento")
             else:
                 status = self.select_status_venda.currentText()
-                if (status.lower() == 'selecione o status da venda'):
+                if status.lower() == "selecione o status da venda":
                     self.msg("Erro", "Indique o STATUS da Venda")
                 else:
-                    dataVencimento = ''
-                    if tipoPagamento.lower() == 'prazo':
+                    dataVencimento = ""
+                    if tipoPagamento.lower() == "prazo":
                         dataVencimento = self.txt_venda_vencimento.text()
 
-                    fullDataSet = (int(clientId[0]), totalVenda, self.txt_venda_data.text(), tipoPagamento, dataVencimento, status)
+                    fullDataSet = (
+                        int(clientId[0]),
+                        totalVenda,
+                        self.txt_venda_data.text(),
+                        tipoPagamento,
+                        dataVencimento,
+                        status,
+                    )
 
-                    response = self.db.update_venda(vendaId=vendaId, fullDataSet=fullDataSet)
+                    response = self.db.update_venda(
+                        vendaId=vendaId, fullDataSet=fullDataSet
+                    )
 
                     if response[0].lower() == "sucess":
-
-                        actualProductsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
+                        actualProductsToVenda = self.db.get_vendas_by_vendasId(
+                            vendaId=vendaId
+                        )
 
                         for temp in actualProductsToVenda:
                             result = self.db.delete_link_venda_product(index=temp[0])
@@ -1565,7 +1695,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if resp == QMessageBox.Yes:
             vendaId = (
-                self.tb_widget_vendas_cliente_detail.selectionModel().currentIndex().siblingAtColumn(0).data()
+                self.tb_widget_vendas_cliente_detail.selectionModel()
+                .currentIndex()
+                .siblingAtColumn(0)
+                .data()
             )
             result = self.db.delete_venda(vendaId)
 
@@ -1584,7 +1717,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if resp == QMessageBox.Yes:
             compraId = (
-                self.table_compras.selectionModel().currentIndex().siblingAtColumn(0).data()
+                self.table_compras.selectionModel()
+                .currentIndex()
+                .siblingAtColumn(0)
+                .data()
             )
             result = self.db.delete_compra(compraId)
 
@@ -1601,7 +1737,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if resp == QMessageBox.Yes:
             compraId = (
-                self.tableWidget.selectionModel().currentIndex().siblingAtColumn(0).data()
+                self.tableWidget.selectionModel()
+                .currentIndex()
+                .siblingAtColumn(0)
+                .data()
             )
             result = self.db.delete_compra(compraId)
 
@@ -1611,8 +1750,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def clicked_client(self, item):
         if item.column() == 0:
-
-            dateAux = self.strToday.split('/')
+            dateAux = self.strToday.split("/")
             self.currentYear = dateAux[2]
 
             clientID = item.data()
@@ -1622,50 +1760,64 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             vendasCliente = self.db.get_vendas_by_clientId(clientID)
 
             totalGasto = 0
-            status = 'OK'
+            status = "OK"
             alpha = 140
-            color = QColor(0,255,0)
+            color = QColor(0, 255, 0)
 
             for venda in vendasCliente:
                 totalGasto += venda[2]
-                if(venda[6] == 'ATRASADO'):
-                    status = 'IRREGULAR'
-                    color = QColor(255,0,0)
-                elif venda[6] == 'AGUARDANDO PAGAMENTO':
-                    status = 'REGULAR - PAGAMENTO EM ABERTO'
-                    color = QColor(255,255,0)
+                if venda[6] == "ATRASADO":
+                    status = "IRREGULAR"
+                    color = QColor(255, 0, 0)
+                elif venda[6] == "AGUARDANDO PAGAMENTO":
+                    status = "REGULAR - PAGAMENTO EM ABERTO"
+                    color = QColor(255, 255, 0)
 
-            self.lb_nome_cliente_detail.setText('Nome: ' + currentClient[2])
-            self.lb_cpf_cliente_detail.setText('CPF: ' + currentClient[1])
-            self.lb_telefone_cliente_detail.setText('Telefone: ' + currentClient[3])
-            enderecoTemp = currentClient[4] + ', nº ' + currentClient[5] + ', ' + currentClient[6] + ', ' + currentClient[7] + '-' + currentClient[8]
-            self.lb_endereco_cliente_detail.setText('Endereco: ' + enderecoTemp)
+            self.lb_nome_cliente_detail.setText("Nome: " + currentClient[2])
+            self.lb_cpf_cliente_detail.setText("CPF: " + currentClient[1])
+            self.lb_telefone_cliente_detail.setText("Telefone: " + currentClient[3])
+            enderecoTemp = (
+                currentClient[4]
+                + ", nº "
+                + currentClient[5]
+                + ", "
+                + currentClient[6]
+                + ", "
+                + currentClient[7]
+                + "-"
+                + currentClient[8]
+            )
+            self.lb_endereco_cliente_detail.setText("Endereco: " + enderecoTemp)
 
-            self.lb_num_pedidos_cliente.setText('Nº de Pedidos: ' + str(len(vendasCliente)))
-            self.lb_total_gasto_cliente.setText('Total Gasto: R$' + str(f"{float(totalGasto):9.2f}"))
+            self.lb_num_pedidos_cliente.setText(
+                "Nº de Pedidos: " + str(len(vendasCliente))
+            )
+            self.lb_total_gasto_cliente.setText(
+                "Total Gasto: R$" + str(f"{float(totalGasto):9.2f}")
+            )
 
             self.lb_status_cliente.setAutoFillBackground(True)
             values = "{r}, {g}, {b}, {a}".format(
-                r=color.red(),
-                g=color.green(),
-                b= color.blue(),
-                a=alpha
+                r=color.red(), g=color.green(), b=color.blue(), a=alpha
             )
-            self.lb_status_cliente.setStyleSheet("QLabel { background-color :  rgba(" + values +")}")
-            self.lb_status_cliente.setText('Stauts: ' + status)
+            self.lb_status_cliente.setStyleSheet(
+                "QLabel { background-color :  rgba(" + values + ")}"
+            )
+            self.lb_status_cliente.setText("Stauts: " + status)
 
             self.create_venda_line_chart(clientID)
             self.search_vendas_to_client(clientID)
 
             self.btn_contato_cliente.clicked.disconnect()
-            self.btn_contato_cliente.clicked.connect(lambda: self.contato_whatsapp_web(currentClient[3]))
+            self.btn_contato_cliente.clicked.connect(
+                lambda: self.contato_whatsapp_web(currentClient[3])
+            )
 
             self.Pages.setCurrentWidget(self.pg_cliente_detail)
-    
+
     def clicked_fornecedor(self, item):
         if item.column() == 0:
-
-            dateAux = self.strToday.split('/')
+            dateAux = self.strToday.split("/")
             self.currentYear = dateAux[2]
 
             fornecedorId = item.data()
@@ -1675,48 +1827,56 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             comprasFornecedor = self.db.get_compras_by_fornecedoId(fornecedorId)
 
             totalGasto = 0
-            status = 'OK'
+            status = "OK"
             alpha = 140
-            color = QColor(0,255,0)
+            color = QColor(0, 255, 0)
 
             for compra in comprasFornecedor:
                 totalGasto += compra[2]
-                if(compra[6] == 'ATRASADO'):
-                    status = 'IRREGULAR'
-                    color = QColor(255,0,0)
-                elif compra[6] == 'AGUARDANDO PAGAMENTO':
-                    status = 'REGULAR - PAGAMENTO EM ABERTO'
-                    color = QColor(255,255,0)
+                if compra[6] == "ATRASADO":
+                    status = "IRREGULAR"
+                    color = QColor(255, 0, 0)
+                elif compra[6] == "AGUARDANDO PAGAMENTO":
+                    status = "REGULAR - PAGAMENTO EM ABERTO"
+                    color = QColor(255, 255, 0)
 
-            self.lb_nome_fornecedor_detail.setText('Nome: ' + currentFornecedor[1])
-            self.lb_telefone_fornecedor_detail.setText('Telefone: ' + currentFornecedor[2])
-            self.lb_cidade_fornecedor_detail.setText('Endereco: ' + currentFornecedor[3])
+            self.lb_nome_fornecedor_detail.setText("Nome: " + currentFornecedor[1])
+            self.lb_telefone_fornecedor_detail.setText(
+                "Telefone: " + currentFornecedor[2]
+            )
+            self.lb_cidade_fornecedor_detail.setText(
+                "Endereco: " + currentFornecedor[3]
+            )
 
-            self.lb_num_compras_fornecedor_detail.setText('Nº de Pedidos: ' + str(len(comprasFornecedor)))
-            self.lb_total_gasto_fornecedor_detail.setText('Total Gasto: R$' + str(f"{float(totalGasto):9.2f}"))
+            self.lb_num_compras_fornecedor_detail.setText(
+                "Nº de Pedidos: " + str(len(comprasFornecedor))
+            )
+            self.lb_total_gasto_fornecedor_detail.setText(
+                "Total Gasto: R$" + str(f"{float(totalGasto):9.2f}")
+            )
 
             self.lb_status_fornecedor_detail.setAutoFillBackground(True)
             values = "{r}, {g}, {b}, {a}".format(
-                r=color.red(),
-                g=color.green(),
-                b= color.blue(),
-                a=alpha
+                r=color.red(), g=color.green(), b=color.blue(), a=alpha
             )
-            self.lb_status_fornecedor_detail.setStyleSheet("QLabel { background-color :  rgba(" + values +")}")
-            self.lb_status_fornecedor_detail.setText('Stauts: ' + status)
+            self.lb_status_fornecedor_detail.setStyleSheet(
+                "QLabel { background-color :  rgba(" + values + ")}"
+            )
+            self.lb_status_fornecedor_detail.setText("Stauts: " + status)
 
             self.create_compra_line_chart(fornecedorId)
             self.search_compras_to_fornecedor(fornecedorId)
 
             self.btn_contato_fornecedor.clicked.disconnect()
-            self.btn_contato_fornecedor.clicked.connect(lambda: self.contato_whatsapp_web(currentFornecedor[3]))
+            self.btn_contato_fornecedor.clicked.connect(
+                lambda: self.contato_whatsapp_web(currentFornecedor[3])
+            )
 
             self.Pages.setCurrentWidget(self.pg_fornecedores_detail)
-        
+
     def clicked_produto(self, item):
         if item.column() == 0:
-
-            dateAux = self.strToday.split('/')
+            dateAux = self.strToday.split("/")
             self.currentYear = dateAux[2]
 
             productId = item.data()
@@ -1726,12 +1886,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             product_In_Vendas = self.db.get_vendas_by_productId(productId)
             product_In_Compras = self.db.get_compras_by_productId(productId)
 
-            if (len(product_In_Compras) > 0 and len(product_In_Vendas) > 0):
+            if len(product_In_Compras) > 0 and len(product_In_Vendas) > 0:
                 totalValorEmVendas = 0
                 totalValorEmCompras = 0
                 bestCompraId = None
                 valorMenor = sys.float_info.max
-                
+
                 for produtoVenda in product_In_Vendas:
                     totalValorEmVendas += produtoVenda[3]
 
@@ -1740,33 +1900,54 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     if produtoCompra[2] < float(valorMenor):
                         valorMenor = produtoCompra[2]
                         bestCompraId = produtoCompra[5]
-                    
+
                 diferencaCompraVenda = totalValorEmVendas - totalValorEmCompras
-                
+
                 margemLucro = (diferencaCompraVenda * 100) / totalValorEmCompras
 
                 bestCompraObj = self.db.select_specific_compra(compraId=bestCompraId)
-                bestFornecedor = self.db.select_specific_fornecedor(fornecedorId=bestCompraObj[1])
+                bestFornecedor = self.db.select_specific_fornecedor(
+                    fornecedorId=bestCompraObj[1]
+                )
 
-                self.lb_best_fornecedor_produto.setText("Melhor Fornecedor: " + bestFornecedor[1])
-                self.lb_best_fornecedor_produto_valor_medida.setText("Valor / Medida: R$" + str(f"{float(valorMenor):9.2f}"))
-                self.lb_produto_valor_gasto.setText('Total Gasto em Compra: R$' + str(f"{float(totalValorEmCompras):9.2f}"))
-                self.lb_produto_valor_ganho.setText('Total Ganho em Vendas: R$' + str(f"{float(totalValorEmVendas):9.2f}"))
-                self.lb_lucro_margem.setText("Lucro / Margem: R$" + str(f"{float(diferencaCompraVenda):9.2f}") + " / " + str(f"{float(margemLucro):9.2f}") + "%")
+                self.lb_best_fornecedor_produto.setText(
+                    "Melhor Fornecedor: " + bestFornecedor[1]
+                )
+                self.lb_best_fornecedor_produto_valor_medida.setText(
+                    "Valor / Medida: R$" + str(f"{float(valorMenor):9.2f}")
+                )
+                self.lb_produto_valor_gasto.setText(
+                    "Total Gasto em Compra: R$"
+                    + str(f"{float(totalValorEmCompras):9.2f}")
+                )
+                self.lb_produto_valor_ganho.setText(
+                    "Total Ganho em Vendas: R$"
+                    + str(f"{float(totalValorEmVendas):9.2f}")
+                )
+                self.lb_lucro_margem.setText(
+                    "Lucro / Margem: R$"
+                    + str(f"{float(diferencaCompraVenda):9.2f}")
+                    + " / "
+                    + str(f"{float(margemLucro):9.2f}")
+                    + "%"
+                )
 
             self.lb_nome_produto_detail.setText("Nome: " + currentProduto[1])
             self.lb_medida_produto_detail.setText("Medida: " + currentProduto[2])
-            self.lb_valor_medida_produto_detail.setText('Preco/Medida: R$' + str(f"{float(currentProduto[3]):9.2f}"))
+            self.lb_valor_medida_produto_detail.setText(
+                "Preco/Medida: R$" + str(f"{float(currentProduto[3]):9.2f}")
+            )
             self.create_produto_line_chart(produtoId=productId)
 
             self.Pages.setCurrentWidget(self.pg_produtos_detail)
 
     def printer_venda(self):
+        vendaId = (
+            self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
+        )
 
-        vendaId = self.tb_vendas.selectionModel().currentIndex().siblingAtColumn(0).data()
-        
         if vendaId == None:
-            self.msg('Erro', 'Selecione uma Venda para poder imprimir.')
+            self.msg("Erro", "Selecione uma Venda para poder imprimir.")
         else:
             msg = QMessageBox()
             msg.setWindowTitle("Imprimir")
@@ -1782,12 +1963,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 cliente = self.db.select_specific_client(int(venda[1]))
 
                 produtosPrint = []
-                quantTotalItens = 0
 
                 for item in vendaManyToMany:
                     product = self.db.select_specific_product(item[1])
                     uniTemp = ""
-                    quantTotalItens += item[2]
 
                     match str(product[2]).lower():
                         case "kg":
@@ -1798,21 +1977,56 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             uniTemp = "UN"
                         case "caixa":
                             uniTemp = "CX"
+                        case "fardo":
+                            uniTemp = "FA"
+                        case "litro":
+                            uniTemp = "LT"
                         case _:
                             uniTemp = "--"
-                
+
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
 
                 for x in range(2):
+                    produtosPrint.sort(key=lambda produto: produto[0])
+                    for productToText in produtosPrint:
+                        if str(productToText[0]).lower() == "bobina":
+                            quant, ok = QInputDialog.getText(
+                                self, "Peso da Bobina", "Digite o peso da bobina: "
+                            )
+                            if ok:
+                                vendaTemp = list(venda)
+                                vendaTemp[2] -= productToText[4]
+                                vendaTemp[2] += float(quant) * float(productToText[3])
+                                venda = tuple(vendaTemp)
+                                self.db.update_total_venda(vendaId=vendaId, total=venda[2])
+                                print(
+                                    str(f"{float(productToText[1]):9.2f}")
+                                    + " "
+                                    + str(productToText[2]) + '('+quant+' Kg)'
+                                    + " "
+                                    + str(f"{float(productToText[3]):9.2f}")
+                                    + " "
+                                    + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                    + "\n"
+                                )
+                        else:
+                            print(
+                                str(f"{float(productToText[1]):9.2f}")
+                                + " "
+                                + str(productToText[2])
+                                + " "
+                                + str(f"{float(productToText[3]):9.2f}")
+                                + " "
+                                + str(f"{float(productToText[4]):9.2f}")
+                                + "\n"
+                            )
+                    
+                    print('Total: R$' + str(venda[2]))
                     try:
                         printer = Usb(0x1FC9, 0x2016)
 
-                        printer.charcode('CP860')
-
-                        printer.set(
-                            align="center", font="A", text_type="B"
-                        )
+                        printer.set(align="center", font="A", text_type="B")
                         printer.text("\nCOMERCIAL J. FRUTAS\n")
                         printer.text("ORG. DAMARIS e GILBERLANDIA\n")
                         printer.text("(84)99707-4633 / (84)99847-2121\n")
@@ -1843,37 +2057,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Especie  Quant. UN        Unit.      Total\n")
+                        printer.set(align="right", text_type="normal")
+                        printer.text("Especie        Quant. UN     Unit.      Total\n")
                         printer.text("\n")
 
                         for productToText in produtosPrint:
-                            printer.set(
-                                align="left", font="A", text_type="B"
-                            )
+                            printer.set(align="left", font="A", text_type="B")
                             printer.text(str(productToText[0]).upper() + "\n" + "\n")
-                            printer.set(
-                                align="right", font="A", text_type="B"
-                            )
-                            printer.text(str(f"{float(productToText[1]):9.2f}"))
-                            printer.text(" " + str(productToText[2]))
-                            printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                            printer.text(
-                                " " + str(f"{float(productToText[4]):9.2f}") + "\n" + "\n"
-                            )
+                            printer.set(align="right", font="A", text_type="B")
+                            if str(productToText[0]).lower() == "bobina":
+                                quant, ok = QInputDialog.getText(
+                                    self, "Peso da Bobina", "Digite o peso da bobina: "
+                                )
+                                if ok:
+
+                                    vendaTemp = list(venda)
+                                    vendaTemp[2] -= productToText[4]
+                                    vendaTemp[2] += float(quant) * float(productToText[3])
+                                    venda = tuple(vendaTemp)
+                                    self.db.update_total_venda(vendaId=vendaId, total=venda[2])
+
+                                    printer.text(str(f"{float(productToText[1]):9.2f}"))
+                                    printer.text(" " + str(productToText[2]) +  '('+quant+' Kg)')
+                                    printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
+                                    printer.text(
+                                        " "
+                                        + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                        + "\n"
+                                        + "\n"
+                                    )
+                            else:
+                                printer.text(str(f"{float(productToText[1]):9.2f}"))
+                                printer.text(" " + str(productToText[2]))
+                                printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
+                                printer.text(
+                                    " "
+                                    + str(f"{float(productToText[4]):9.2f}")
+                                    + "\n"
+                                    + "\n"
+                                )
 
                         printer.set(align="center", text_type="B")
-                        printer.text("\n--Total--------------------------------------\n")
-
-                        printer.set(
-                            align="right", font="A", text_type="B"
+                        printer.text(
+                            "\n--Total--------------------------------------\n"
                         )
-                        printer.text("\n" + str(f"{float(quantTotalItens):9.2f}"))
+
+                        printer.set(align="left", font="A", text_type="B")
                         printer.text(
                             "            R$" + str(f"{float(venda[2]):9.2f}") + "\n"
                         )
 
-                        printer.set(align="right", text_type="B")
+                        printer.set(align="left", text_type="B")
                         printer.text("\n")
                         printer.text("Qtd. de Itens: " + str(len(produtosPrint)) + "\n")
 
@@ -1895,7 +2129,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         printer.cut()
                     except Exception as e:
-                        self.msg('Erro', str(e))
+                        self.msg("Erro", str(e))
                         print(e)
                         break
 
@@ -1910,11 +2144,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             break
 
     def printer_venda_detail(self):
+        vendaId = (
+            self.tb_widget_vendas_cliente_detail.selectionModel()
+            .currentIndex()
+            .siblingAtColumn(0)
+            .data()
+        )
 
-        vendaId = self.tb_widget_vendas_cliente_detail.selectionModel().currentIndex().siblingAtColumn(0).data()
-        
         if vendaId == None:
-            self.msg('Erro', 'Selecione uma Venda para poder imprimir.')
+            self.msg("Erro", "Selecione uma Venda para poder imprimir.")
         else:
             msg = QMessageBox()
             msg.setWindowTitle("Imprimir")
@@ -1930,12 +2168,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 cliente = self.db.select_specific_client(int(venda[1]))
 
                 produtosPrint = []
-                quantTotalItens = 0
 
                 for item in vendaManyToMany:
                     product = self.db.select_specific_product(item[1])
                     uniTemp = ""
-                    quantTotalItens += item[2]
 
                     match str(product[2]).lower():
                         case "kg":
@@ -1946,6 +2182,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             uniTemp = "UN"
                         case "caixa":
                             uniTemp = "CX"
+                        case "fardo":
+                            uniTemp = "FA"
+                        case "litro":
+                            uniTemp = "LT"
                         case _:
                             uniTemp = "--"
 
@@ -1953,14 +2193,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     produtosPrint.append(temp)
 
                 for x in range(2):
+                    produtosPrint.sort(key=lambda produto: produto[0])
+                    for productToText in produtosPrint:
+                        if str(productToText[0]).lower() == "bobina":
+                            quant, ok = QInputDialog.getText(
+                                self, "Peso da Bobina", "Digite o peso da bobina: "
+                            )
+                            if ok:
+                                vendaTemp = list(venda)
+                                vendaTemp[2] -= productToText[4]
+                                vendaTemp[2] += float(quant) * float(productToText[3])
+                                venda = tuple(vendaTemp)
+                                self.db.update_total_venda(vendaId=vendaId, total=venda[2])
+                                print(
+                                    str(f"{float(productToText[1]):9.2f}")
+                                    + " "
+                                    + str(productToText[2]) + '('+quant+' Kg)'
+                                    + " "
+                                    + str(f"{float(productToText[3]):9.2f}")
+                                    + " "
+                                    + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                    + "\n"
+                                )
+                        else:
+                            print(
+                                str(f"{float(productToText[1]):9.2f}")
+                                + " "
+                                + str(productToText[2])
+                                + " "
+                                + str(f"{float(productToText[3]):9.2f}")
+                                + " "
+                                + str(f"{float(productToText[4]):9.2f}")
+                                + "\n"
+                            )
+                    
+                    print('Total: R$' + str(venda[2]))
                     try:
                         printer = Usb(0x1FC9, 0x2016)
 
-                        printer.charcode('CP860')
-
-                        printer.set(
-                            align="center", font="A", text_type="B"
-                        )
+                        printer.set(align="center", font="A", text_type="B")
                         printer.text("\nCOMERCIAL J. FRUTAS\n")
                         printer.text("ORG. DAMARIS e GILBERLANDIA\n")
                         printer.text("(84)99707-4633 / (84)99847-2121\n")
@@ -1991,37 +2262,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Especie  Quant. UN        Unit.      Total\n")
+                        printer.set(align="right", text_type="normal")
+                        printer.text("Especie        Quant. UN     Unit.      Total\n")
                         printer.text("\n")
 
                         for productToText in produtosPrint:
-                            printer.set(
-                                align="left", font="A", text_type="B"
-                            )
-                            printer.text(str(productToText[0]).upper() + "\n")
-                            printer.set(
-                                align="right", font="A", text_type="B"
-                            )
-                            printer.text(str(f"{float(productToText[1]):9.2f}"))
-                            printer.text(" " + str(productToText[2]))
-                            printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                            printer.text(
-                                " " + str(f"{float(productToText[4]):9.2f}") + "\n"
-                            )
+                            printer.set(align="left", font="A", text_type="B")
+                            printer.text(str(productToText[0]).upper() + "\n" + "\n")
+                            printer.set(align="right", font="A", text_type="B")
+                            if str(productToText[0]).lower() == "bobina":
+                                quant, ok = QInputDialog.getText(
+                                    self, "Peso da Bobina", "Digite o peso da bobina: "
+                                )
+                                if ok:
+
+                                    vendaTemp = list(venda)
+                                    vendaTemp[2] -= productToText[4]
+                                    vendaTemp[2] += float(quant) * float(productToText[3])
+                                    venda = tuple(vendaTemp)
+                                    self.db.update_total_venda(vendaId=vendaId, total=venda[2])
+
+                                    printer.text(str(f"{float(productToText[1]):9.2f}"))
+                                    printer.text(" " + str(productToText[2]) +  '('+quant+' Kg)')
+                                    printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
+                                    printer.text(
+                                        " "
+                                        + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                        + "\n"
+                                        + "\n"
+                                    )
+                            else:
+                                printer.text(str(f"{float(productToText[1]):9.2f}"))
+                                printer.text(" " + str(productToText[2]))
+                                printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
+                                printer.text(
+                                    " "
+                                    + str(f"{float(productToText[4]):9.2f}")
+                                    + "\n"
+                                    + "\n"
+                                )
 
                         printer.set(align="center", text_type="B")
-                        printer.text("\n--Total--------------------------------------\n")
-
-                        printer.set(
-                            align="right", font="A", text_type="B"
+                        printer.text(
+                            "\n--Total--------------------------------------\n"
                         )
-                        printer.text("\n" + str(f"{float(quantTotalItens):9.2f}"))
+
+                        printer.set(align="left", font="A", text_type="B")
                         printer.text(
                             "            R$" + str(f"{float(venda[2]):9.2f}") + "\n"
                         )
 
-                        printer.set(align="right", text_type="B")
+                        printer.set(align="left", text_type="B")
                         printer.text("\n")
                         printer.text("Qtd. de Itens: " + str(len(produtosPrint)) + "\n")
 
@@ -2043,7 +2334,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         printer.cut()
                     except Exception as e:
-                        self.msg('Erro', str(e))
+                        self.msg("Erro", str(e))
                         print(e)
                         break
 
@@ -2056,6 +2347,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         if resp2 == QMessageBox.No:
                             break
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

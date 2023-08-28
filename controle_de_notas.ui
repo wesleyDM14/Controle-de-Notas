@@ -145,6 +145,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
                     <item>
                      <widget class="QTableWidget" name="table_compras">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -1011,6 +1014,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_19">
                     <item>
                      <widget class="QTableWidget" name="tab_pedido_semana">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>Produto</string>
@@ -1357,6 +1363,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_13">
                     <item>
                      <widget class="QTableWidget" name="tb_widget_vendas_cliente_detail">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -1481,6 +1490,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <item>
                      <widget class="QTableWidget" name="tb_clientes">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -1752,6 +1764,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <item>
                      <widget class="QTableWidget" name="tb_fornecedores">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -2224,6 +2239,9 @@ border: None;
                    <layout class="QHBoxLayout" name="horizontalLayout_16">
                     <item>
                      <widget class="QTableWidget" name="tableWidget">
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -2548,6 +2566,9 @@ border: None;
                       <property name="contextMenuPolicy">
                        <enum>Qt::DefaultContextMenu</enum>
                       </property>
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
                       <column>
                        <property name="text">
                         <string>ID</string>
@@ -2693,7 +2714,22 @@ border: None;
                        </item>
                        <item>
                         <property name="text">
+                         <string>Caixa</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Fardo</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
                          <string>Kg</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Litro</string>
                         </property>
                        </item>
                        <item>
@@ -2704,11 +2740,6 @@ border: None;
                        <item>
                         <property name="text">
                          <string>Unidade</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Caixa</string>
                         </property>
                        </item>
                       </widget>

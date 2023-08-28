@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class Data_base:
     def __init__(self, name="system.db") -> None:
         self.name = name
@@ -756,6 +755,19 @@ class Data_base:
             cursor.execute(f"")
             self.connection.commit()
             return "Sucess", "Subtotal atualizado com sucesso!"
+        except Exception as e:
+            print(e)
+            return "erro", str(e)
+        finally:
+            self.close_connection()
+
+    def update_total_venda(self, vendaId, total):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(f"UPDATE Vendas SET TOTAL = '{total}' WHERE ID = '{vendaId}'")
+            self.connection.commit()
+            return "Sucess", "Total de venda atualizado com sucesso!"
         except Exception as e:
             print(e)
             return "erro", str(e)
