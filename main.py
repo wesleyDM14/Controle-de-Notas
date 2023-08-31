@@ -339,7 +339,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_cadastrar.setText("CADASTRAR")
         self.btn_venda_cadastrar.clicked.disconnect()
         self.btn_venda_cadastrar.clicked.connect(self.register_venda)
-        self.clear_vendas_fields()
 
         self.search_vendas()
         self.search_produtos_semanal()
@@ -590,7 +589,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         y.setLabelFormat("%d")
         y.setTitleText("Nº de Vendas")
         y.setTickType(QValueAxis.TickType.TicksDynamic)
-        y.setTickInterval(3)
+        y.setTickInterval(1)
         chart.addAxis(y, QtCore.Qt.AlignmentFlag.AlignLeft)
 
         series.attachAxis(x)
@@ -968,6 +967,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         today = datetime.date.today()
         strToday = today.strftime("%d/%m/%Y")
         self.txt_venda_data.setText(strToday)
+        self.txt_venda_vencimento.setText(strToday)
+        self.txt_venda_vencimento.setEnabled(False)
         self.select_pagamento_venda.setCurrentIndex(0)
         self.select_status_venda.setCurrentIndex(0)
         self.load_lista_venda_product()
@@ -1322,11 +1323,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
                 )
                 self.ListProductsVenda.append(currentProductList)
-                self.load_lista_venda_product()
+                
             except Exception as e:
                 print(e)
                 self.msg("erro", str(e))
-
+                
+        self.load_lista_venda_product()
         self.btn_venda_cadastrar.setText("EDITAR")
         self.btn_venda_cadastrar.clicked.disconnect()
         self.btn_venda_cadastrar.clicked.connect(
@@ -1416,21 +1418,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if currentVenda[4] == "Prazo":
             self.txt_venda_vencimento.setText(currentVenda[5])
+            self.txt_venda_vencimento.setEnabled(True)
 
         productsToVenda = self.db.get_vendas_by_vendasId(vendaId=vendaId)
 
         for productInVenda in productsToVenda:
             currentProduct = self.db.select_specific_product(int(productInVenda[1]))
             try:
-                currentProductList = (
-                    currentProduct[0],
-                    productInVenda[2],
-                    currentProduct[1],
-                    f"{float(currentProduct[3]):9.2f}",
-                    f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
-                )
-                self.ListProductsVenda.append(currentProductList)
-                self.load_lista_venda_product()
+                if currentProduct is not None:
+                    currentProductList = (
+                        currentProduct[0],
+                        productInVenda[2],
+                        currentProduct[1],
+                        f"{float(currentProduct[3]):9.2f}",
+                        f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
+                    )
+                    self.ListProductsVenda.append(currentProductList)
+                else:
+                    self.db.delete_link_venda_product(index=productInVenda[0])
             except Exception as e:
                 print(e)
                 self.msg("erro", str(e))
@@ -1438,7 +1443,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_cadastrar.setText("EDITAR")
         self.btn_venda_cadastrar.clicked.disconnect()
         self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_aux(vendaId))
-        self.lb_venda_total.setText(str(currentVenda[2]))
+        self.load_lista_venda_product()
+        #self.lb_venda_total.setText(str(f"{currentVenda[2]:9.2f}"))
 
         self.tb_widget_vendas.setCurrentIndex(1)
 
@@ -2070,8 +2076,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Data: " + str(venda[3]) + "\n")
 
+                        printer.set(align="left", text_type="normal")
+                        printer.text("Cliente: ")
+
                         printer.set(align="left", font="B", text_type="B", height=2, width=2)
-                        printer.text("Cliente: " + str(cliente[2]).upper() + "\n")
+                        printer.text(str(cliente[2]).upper() + "\n")
+
+                        printer.set(align="left", text_type="normal")
+                        printer.text("Cidade: " + cliente[7] + "\n")
 
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
@@ -2082,7 +2094,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
-                            printer.text(str(productToText[0]).upper() + "\n" + "\n")
+                            printer.text(str(productToText[0]).upper() + " ")
                             printer.set(align="right", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
                                 quant, ok = QInputDialog.getText(
@@ -2241,8 +2253,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Data: " + str(venda[3]) + "\n")
 
+                        printer.set(align="left", text_type="normal")
+                        printer.text("Cliente: ")
+
                         printer.set(align="left", font="B", text_type="B", height=2, width=2)
-                        printer.text("Cliente: " + str(cliente[2]).upper() + "\n")
+                        printer.text(str(cliente[2]).upper() + "\n")
+
+                        printer.set(align="left", text_type="normal")
+                        printer.text("Cidade: " + cliente[7] + "\n")
 
                         printer.set(align="center", text_type="normal")
                         printer.text("=============================================\n")
@@ -2253,7 +2271,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
-                            printer.text(str(productToText[0]).upper() + "\n" + "\n")
+                            printer.text(str(productToText[0]).upper() + " ")
                             printer.set(align="right", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
                                 quant, ok = QInputDialog.getText(
