@@ -1063,7 +1063,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.select_all_vendas()
         self.tb_vendas.clearContents()
         self.tb_vendas.setRowCount(len(result))
-        status = ""
+        #status = ""
 
         for row, text in enumerate(result):
             status = text[6]
@@ -2094,8 +2094,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
-                            printer.text(str(productToText[0]).upper() + " ")
-                            printer.set(align="right", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
                                 quant, ok = QInputDialog.getText(
                                     self, "Peso da Bobina", "Digite o peso da bobina: "
@@ -2107,35 +2105,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                     vendaTemp[2] += float(quant) * float(productToText[3])
                                     venda = tuple(vendaTemp)
                                     self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-
-                                    printer.text(str(f"{float(productToText[1]):9.2f}"))
-                                    printer.text(" " + str(productToText[2]) +  '('+quant+' Kg)')
-                                    printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                                    printer.text(
-                                        " "
-                                        + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                        + "\n"
-                                        + "\n"
-                                    )
+                                    strTemp = "(" + str(quant) + "Kg)"
+                                    valueTemp = str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                    strToPrint = str.format("{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n", str(productToText[0]).upper(), float(productToText[1]), productToText[2], strTemp, productToText[3], float(valueTemp))
+                                    printer.text(strToPrint)
+                                    printer.text("\n")
                             else:
-                                printer.text(str(f"{float(productToText[1]):9.2f}"))
-                                printer.text(" " + str(productToText[2]))
-                                printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                                printer.text(
-                                    " "
-                                    + str(f"{float(productToText[4]):9.2f}")
-                                    + "\n"
-                                    + "\n"
-                                )
+                                strToPrint = str.format("{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n", str(productToText[0]).upper(), productToText[1], productToText[2], productToText[3], productToText[4])
+                                printer.text(strToPrint)
+                                printer.text("\n")
 
                         printer.set(align="center", text_type="B")
                         printer.text(
                             "\n--Total--------------------------------------\n"
                         )
 
-                        printer.set(align="left", font="A", text_type="B")
+                        printer.set(align="left", font="B", text_type="B", width=2, height=2)
                         printer.text(
-                            "            R$" + str(f"{float(venda[2]):9.2f}") + "\n"
+                            " R$" + str(f"{float(venda[2]):9.2f}") + "\n"
                         )
 
                         printer.set(align="left", text_type="B")
@@ -2222,7 +2209,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
-
+                
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
                     try:
@@ -2271,8 +2258,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
-                            printer.text(str(productToText[0]).upper() + " ")
-                            printer.set(align="right", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
                                 quant, ok = QInputDialog.getText(
                                     self, "Peso da Bobina", "Digite o peso da bobina: "
@@ -2284,35 +2269,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                     vendaTemp[2] += float(quant) * float(productToText[3])
                                     venda = tuple(vendaTemp)
                                     self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-
-                                    printer.text(str(f"{float(productToText[1]):9.2f}"))
-                                    printer.text(" " + str(productToText[2]) +  '('+quant+' Kg)')
-                                    printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                                    printer.text(
-                                        " "
-                                        + str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                        + "\n"
-                                        + "\n"
-                                    )
+                                    strTemp = "(" + str(quant) + "Kg)"
+                                    valueTemp = str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
+                                    strToPrint = str.format("{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n", str(productToText[0]).upper(), float(productToText[1]), productToText[2], strTemp, productToText[3], float(valueTemp))
+                                    printer.text(strToPrint)
+                                    printer.text("\n")
                             else:
-                                printer.text(str(f"{float(productToText[1]):9.2f}"))
-                                printer.text(" " + str(productToText[2]))
-                                printer.text(" " + str(f"{float(productToText[3]):9.2f}"))
-                                printer.text(
-                                    " "
-                                    + str(f"{float(productToText[4]):9.2f}")
-                                    + "\n"
-                                    + "\n"
-                                )
+                                strToPrint = str.format("{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n", str(productToText[0]).upper(), productToText[1], productToText[2], productToText[3], productToText[4])
+                                printer.text(strToPrint)
+                                printer.text("\n")
 
                         printer.set(align="center", text_type="B")
                         printer.text(
                             "\n--Total--------------------------------------\n"
                         )
 
-                        printer.set(align="left", font="A", text_type="B")
+                        printer.set(align="left", font="B", text_type="B", width=2, height=2)
                         printer.text(
-                            "            R$" + str(f"{float(venda[2]):9.2f}") + "\n"
+                            " R$" + str(f"{float(venda[2]):9.2f}") + "\n"
                         )
 
                         printer.set(align="left", text_type="B")
@@ -2336,6 +2310,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.text("########### SEM VALOR FISCAL ############")
 
                         printer.cut()
+
                     except Exception as e:
                         self.msg("Erro", str(e))
                         print(e)
