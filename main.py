@@ -39,6 +39,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.produtoAtual = None
         self.fornecedorAtual = None
 
+        self.strBobina = ""
+
         ###############################################################
         # BOTÃO MENU
         self.btn_menu.clicked.connect(self.leftMenu)
@@ -297,7 +299,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ###############################################################
 
         ###############################################################
-        #EDIT QUANT VENDA TABLE
+        # EDIT QUANT VENDA TABLE
         self.tb_vendas_itens.doubleClicked.connect(self.edit_iten_in_list_venda)
         ###############################################################
 
@@ -306,15 +308,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def edit_item_in_list_aux(self):
         self.tb_vendas_itens.itemChanged.disconnect()
-        produtoNome = self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(1).data()
-        novaQuant = self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(0).data()
-        novoSubTotal = float(novaQuant) * float(self.tb_vendas_itens.selectionModel().currentIndex().siblingAtColumn(2).data())
+        produtoNome = (
+            self.tb_vendas_itens.selectionModel()
+            .currentIndex()
+            .siblingAtColumn(1)
+            .data()
+        )
+        novaQuant = (
+            self.tb_vendas_itens.selectionModel()
+            .currentIndex()
+            .siblingAtColumn(0)
+            .data()
+        )
+        novoSubTotal = float(novaQuant) * float(
+            self.tb_vendas_itens.selectionModel()
+            .currentIndex()
+            .siblingAtColumn(2)
+            .data()
+        )
 
         for i, produto in enumerate(self.ListProductsVenda):
             produtoTemp = list(produto)
-            if (produtoNome == produtoTemp[2]):
+            if produtoNome == produtoTemp[2]:
                 produtoTemp[1] = float(novaQuant)
-                produtoTemp[4] =  f"{float(novoSubTotal):9.2f}"
+                produtoTemp[4] = f"{float(novoSubTotal):9.2f}"
                 self.ListProductsVenda[i] = tuple(produtoTemp)
                 break
         self.tb_vendas_itens.clear()
@@ -1063,7 +1080,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.select_all_vendas()
         self.tb_vendas.clearContents()
         self.tb_vendas.setRowCount(len(result))
-        #status = ""
+        # status = ""
 
         for row, text in enumerate(result):
             status = text[6]
@@ -1323,11 +1340,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     f"{float(productInVenda[2]) * float(currentProduct[3]):9.2f}",
                 )
                 self.ListProductsVenda.append(currentProductList)
-                
+
             except Exception as e:
                 print(e)
                 self.msg("erro", str(e))
-                
+
         self.load_lista_venda_product()
         self.btn_venda_cadastrar.setText("EDITAR")
         self.btn_venda_cadastrar.clicked.disconnect()
@@ -1444,7 +1461,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btn_venda_cadastrar.clicked.disconnect()
         self.btn_venda_cadastrar.clicked.connect(lambda: self.update_venda_aux(vendaId))
         self.load_lista_venda_product()
-        #self.lb_venda_total.setText(str(f"{currentVenda[2]:9.2f}"))
+        # self.lb_venda_total.setText(str(f"{currentVenda[2]:9.2f}"))
 
         self.tb_widget_vendas.setCurrentIndex(1)
 
@@ -1514,7 +1531,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             )
             now = datetime.date.today()
             indice = now.weekday()
-            
+
             day = now.day
             month = now.month
             year = now.year
@@ -1556,16 +1573,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 day += 1
             for i, venda in enumerate(vendas_from_current_produto):
                 currentVenda = self.db.select_specific_venda(vendaId=int(venda[4]))
-                if (not currentVenda == None):
+                if not currentVenda == None:
                     for data in datas:
                         if currentVenda[3] == data:
-                            novoSubTotal = venda[2] * float(self.txt_preco_produto.text())
-                            self.db.update_venda_subtotal_produto(tempId=venda[0], subTotal=novoSubTotal)
+                            novoSubTotal = venda[2] * float(
+                                self.txt_preco_produto.text()
+                            )
+                            self.db.update_venda_subtotal_produto(
+                                tempId=venda[0], subTotal=novoSubTotal
+                            )
                             novoTotal = 0
-                            attVenda = self.db.get_vendas_by_vendasId(vendaId=currentVenda[0])
+                            attVenda = self.db.get_vendas_by_vendasId(
+                                vendaId=currentVenda[0]
+                            )
                             for element in attVenda:
                                 novoTotal += element[3]
-                            self.db.update_total_venda(total=novoTotal, vendaId=currentVenda[0])
+                            self.db.update_total_venda(
+                                total=novoTotal, vendaId=currentVenda[0]
+                            )
 
             self.btn_cadastrar_produto.setText("CADASTRAR")
             self.btn_cadastrar_produto.clicked.disconnect()
@@ -2045,7 +2070,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
-
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
                     try:
@@ -2079,7 +2103,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Cliente: ")
 
-                        printer.set(align="left", font="B", text_type="B", height=2, width=2)
+                        printer.set(
+                            align="left", font="B", text_type="B", height=2, width=2
+                        )
                         printer.text(str(cliente[2]).upper() + "\n")
 
                         printer.set(align="left", text_type="normal")
@@ -2095,23 +2121,52 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
-                                quant, ok = QInputDialog.getText(
-                                    self, "Peso da Bobina", "Digite o peso da bobina: "
-                                )
-                                if ok:
-
-                                    vendaTemp = list(venda)
-                                    vendaTemp[2] -= productToText[4]
-                                    vendaTemp[2] += float(quant) * float(productToText[3])
-                                    venda = tuple(vendaTemp)
-                                    self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-                                    strTemp = "(" + str(quant) + "Kg)"
-                                    valueTemp = str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                    strToPrint = str.format("{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n", str(productToText[0]).upper(), float(productToText[1]), productToText[2], strTemp, productToText[3], float(valueTemp))
+                                if x == 0:
+                                    quant, ok = QInputDialog.getText(
+                                        self,
+                                        "Peso da Bobina",
+                                        "Digite o peso da bobina: ",
+                                    )
+                                    if ok:
+                                        vendaTemp = list(venda)
+                                        vendaTemp[2] -= productToText[4]
+                                        vendaTemp[2] += float(quant) * float(
+                                            productToText[3]
+                                        )
+                                        venda = tuple(vendaTemp)
+                                        self.db.update_total_venda(
+                                            vendaId=vendaId, total=venda[2]
+                                        )
+                                        strTemp = "(" + str(quant) + "Kg)"
+                                        valueTemp = str(
+                                            f"{float((float(quant) * float(productToText[3]))):9.2f}"
+                                        )
+                                        strToPrint = str.format(
+                                            "{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
+                                            str(productToText[0]).upper(),
+                                            float(productToText[1]),
+                                            productToText[2],
+                                            strTemp,
+                                            productToText[3],
+                                            float(valueTemp),
+                                        )
+                                        self.strBobina = strToPrint
+                                        printer.text(strToPrint)
+                                        printer.text("\n")
+                                else:
+                                    strToPrint = self.strBobina
                                     printer.text(strToPrint)
                                     printer.text("\n")
+
                             else:
-                                strToPrint = str.format("{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n", str(productToText[0]).upper(), productToText[1], productToText[2], productToText[3], productToText[4])
+                                strToPrint = str.format(
+                                    "{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
+                                    str(productToText[0]).upper(),
+                                    productToText[1],
+                                    productToText[2],
+                                    productToText[3],
+                                    productToText[4],
+                                )
                                 printer.text(strToPrint)
                                 printer.text("\n")
 
@@ -2120,10 +2175,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             "\n--Total--------------------------------------\n"
                         )
 
-                        printer.set(align="left", font="B", text_type="B", width=2, height=2)
-                        printer.text(
-                            " R$" + str(f"{float(venda[2]):9.2f}") + "\n"
+                        printer.set(
+                            align="left", font="B", text_type="B", width=2, height=2
                         )
+                        printer.text(" R$" + str(f"{float(venda[2]):9.2f}") + "\n")
 
                         printer.set(align="left", text_type="B")
                         printer.text("\n")
@@ -2209,7 +2264,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
-                
+
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
                     try:
@@ -2243,7 +2298,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.set(align="left", text_type="normal")
                         printer.text("Cliente: ")
 
-                        printer.set(align="left", font="B", text_type="B", height=2, width=2)
+                        printer.set(
+                            align="left", font="B", text_type="B", height=2, width=2
+                        )
                         printer.text(str(cliente[2]).upper() + "\n")
 
                         printer.set(align="left", text_type="normal")
@@ -2259,23 +2316,52 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         for productToText in produtosPrint:
                             printer.set(align="left", font="A", text_type="B")
                             if str(productToText[0]).lower() == "bobina":
-                                quant, ok = QInputDialog.getText(
-                                    self, "Peso da Bobina", "Digite o peso da bobina: "
-                                )
-                                if ok:
-
-                                    vendaTemp = list(venda)
-                                    vendaTemp[2] -= productToText[4]
-                                    vendaTemp[2] += float(quant) * float(productToText[3])
-                                    venda = tuple(vendaTemp)
-                                    self.db.update_total_venda(vendaId=vendaId, total=venda[2])
-                                    strTemp = "(" + str(quant) + "Kg)"
-                                    valueTemp = str(f"{float((float(quant) * float(productToText[3]))):9.2f}")
-                                    strToPrint = str.format("{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n", str(productToText[0]).upper(), float(productToText[1]), productToText[2], strTemp, productToText[3], float(valueTemp))
+                                if x == 0:
+                                    quant, ok = QInputDialog.getText(
+                                        self,
+                                        "Peso da Bobina",
+                                        "Digite o peso da bobina: ",
+                                    )
+                                    if ok:
+                                        vendaTemp = list(venda)
+                                        vendaTemp[2] -= productToText[4]
+                                        vendaTemp[2] += float(quant) * float(
+                                            productToText[3]
+                                        )
+                                        venda = tuple(vendaTemp)
+                                        self.db.update_total_venda(
+                                            vendaId=vendaId, total=venda[2]
+                                        )
+                                        strTemp = "(" + str(quant) + "Kg)"
+                                        valueTemp = str(
+                                            f"{float((float(quant) * float(productToText[3]))):9.2f}"
+                                        )
+                                        strToPrint = str.format(
+                                            "{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
+                                            str(productToText[0]).upper(),
+                                            float(productToText[1]),
+                                            productToText[2],
+                                            strTemp,
+                                            productToText[3],
+                                            float(valueTemp),
+                                        )
+                                        self.strBobina = strToPrint
+                                        printer.text(strToPrint)
+                                        printer.text("\n")
+                                else:
+                                    strToPrint = self.strBobina
                                     printer.text(strToPrint)
                                     printer.text("\n")
+
                             else:
-                                strToPrint = str.format("{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n", str(productToText[0]).upper(), productToText[1], productToText[2], productToText[3], productToText[4])
+                                strToPrint = str.format(
+                                    "{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
+                                    str(productToText[0]).upper(),
+                                    productToText[1],
+                                    productToText[2],
+                                    productToText[3],
+                                    productToText[4],
+                                )
                                 printer.text(strToPrint)
                                 printer.text("\n")
 
@@ -2284,10 +2370,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             "\n--Total--------------------------------------\n"
                         )
 
-                        printer.set(align="left", font="B", text_type="B", width=2, height=2)
-                        printer.text(
-                            " R$" + str(f"{float(venda[2]):9.2f}") + "\n"
+                        printer.set(
+                            align="left", font="B", text_type="B", width=2, height=2
                         )
+                        printer.text(" R$" + str(f"{float(venda[2]):9.2f}") + "\n")
 
                         printer.set(align="left", text_type="B")
                         printer.text("\n")
