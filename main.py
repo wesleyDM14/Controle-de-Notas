@@ -2142,7 +2142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                             f"{float((float(quant) * float(productToText[3]))):9.2f}"
                                         )
                                         strToPrint = str.format(
-                                            "{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
+                                            "{:15s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
                                             str(productToText[0]).upper(),
                                             float(productToText[1]),
                                             productToText[2],
@@ -2160,7 +2160,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                             else:
                                 strToPrint = str.format(
-                                    "{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
+                                    "{:15s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
                                     str(productToText[0]).upper(),
                                     productToText[1],
                                     productToText[2],
@@ -2337,7 +2337,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                             f"{float((float(quant) * float(productToText[3]))):9.2f}"
                                         )
                                         strToPrint = str.format(
-                                            "{:16s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
+                                            "{:15s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
                                             str(productToText[0]).upper(),
                                             float(productToText[1]),
                                             productToText[2],
@@ -2355,7 +2355,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                             else:
                                 strToPrint = str.format(
-                                    "{:16s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
+                                    "{:15s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
                                     str(productToText[0]).upper(),
                                     productToText[1],
                                     productToText[2],
