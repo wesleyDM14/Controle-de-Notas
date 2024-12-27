@@ -773,4 +773,12 @@ class Data_base:
             return "erro", str(e)
         finally:
             self.close_connection()
+    
+    def create_connection(self, connection, db):
+        try:
+            pass
+        except Exception as e:
+            return 'erro', str(e)
+        finally:
+            self.close_connection()
 #########################################################################

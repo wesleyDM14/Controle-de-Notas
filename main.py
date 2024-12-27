@@ -1139,7 +1139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def search_produtos_semanal(self):
         self.tab_pedido_semana.clearContents()
         now = datetime.date.today()
-        indice = now.weekday()
+        indice = (now.weekday() + 1) % 7
 
         day = now.day
         month = now.month
@@ -1530,7 +1530,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 productId=productId
             )
             now = datetime.date.today()
-            indice = now.weekday()
+            indice = (now.weekday() + 1) % 7
 
             day = now.day
             month = now.month
@@ -2201,6 +2201,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.text("########### SEM VALOR FISCAL ############")
 
                         printer.cut()
+                        
                     except Exception as e:
                         self.msg("Erro", str(e))
                         print(e)
@@ -2268,6 +2269,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
                     try:
+
                         printer = Usb(0x1FC9, 0x2016)
 
                         printer.set(align="center", font="A", text_type="B")
@@ -2401,6 +2403,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.msg("Erro", str(e))
                         print(e)
                         break
+                    
 
                     if x == 0:
                         msg2 = QMessageBox()
@@ -2418,7 +2421,7 @@ if __name__ == "__main__":
     apply_stylesheet(app, theme="light_cyan_500.xml")
     db = Data_base()
     db.create_table_client()
-    db.create_table_fornecedor()
+    db.create_table_fornecedor()    
     db.create_table_produto()
     db.create_table_venda()
     db.create_table_compra()
