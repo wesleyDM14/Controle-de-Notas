@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'controle_de_notas.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.1
+## Created by: Qt User Interface Compiler version 6.8.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(772, 566)
+        MainWindow.resize(1094, 700)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_8 = QGridLayout(self.centralwidget)
@@ -48,20 +48,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.btn_menu = QPushButton(self.header_frame)
         self.btn_menu.setObjectName(u"btn_menu")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_menu.sizePolicy().hasHeightForWidth())
         self.btn_menu.setSizePolicy(sizePolicy)
         self.btn_menu.setMinimumSize(QSize(0, 0))
-        self.btn_menu.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_menu.setLayoutDirection(Qt.RightToLeft)
         self.btn_menu.setAutoFillBackground(False)
         self.btn_menu.setStyleSheet(u"background-color: None;\n"
 "border: None;\n"
 "")
         icon = QIcon()
-        icon.addFile(u":/icons/icons/botao-de-menu-de-tres-linhas-horizontais (1).png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/botao-de-menu-de-tres-linhas-horizontais (1).png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_menu.setIcon(icon)
         self.btn_menu.setIconSize(QSize(32, 32))
 
@@ -77,7 +77,7 @@ class Ui_MainWindow(object):
 
         self.main_frame = QFrame(self.main_container)
         self.main_frame.setObjectName(u"main_frame")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.main_frame.sizePolicy().hasHeightForWidth())
@@ -134,17 +134,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
         self.btn_compra_excluir = QPushButton(self.frame_10)
         self.btn_compra_excluir.setObjectName(u"btn_compra_excluir")
-        self.btn_compra_excluir.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_compra_excluir.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_27.addWidget(self.btn_compra_excluir)
 
         self.btn_compra_editar = QPushButton(self.frame_10)
         self.btn_compra_editar.setObjectName(u"btn_compra_editar")
-        self.btn_compra_editar.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_compra_editar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_27.addWidget(self.btn_compra_editar)
 
-        self.verticalSpacer_16 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_16 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_27.addItem(self.verticalSpacer_16)
 
@@ -217,7 +217,7 @@ class Ui_MainWindow(object):
 
         self.btn_add_produto_compra = QPushButton(self.frame_11)
         self.btn_add_produto_compra.setObjectName(u"btn_add_produto_compra")
-        self.btn_add_produto_compra.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_add_produto_compra.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.gridLayout_5.addWidget(self.btn_add_produto_compra, 2, 4, 1, 2, Qt.AlignHCenter)
 
@@ -283,11 +283,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.setObjectName(u"verticalLayout_30")
         self.btn_remover_produto_compra = QPushButton(self.frame_13)
         self.btn_remover_produto_compra.setObjectName(u"btn_remover_produto_compra")
-        self.btn_remover_produto_compra.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_remover_produto_compra.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_30.addWidget(self.btn_remover_produto_compra)
 
-        self.verticalSpacer_17 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_17 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_30.addItem(self.verticalSpacer_17)
 
@@ -306,7 +306,7 @@ class Ui_MainWindow(object):
         self.btn_compra_registrar = QPushButton(self.frame_12)
         self.btn_compra_registrar.setObjectName(u"btn_compra_registrar")
         self.btn_compra_registrar.setMinimumSize(QSize(150, 30))
-        self.btn_compra_registrar.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_compra_registrar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_31.addWidget(self.btn_compra_registrar, 0, Qt.AlignHCenter)
 
@@ -324,7 +324,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.lb_logo = QLabel(self.pg_home)
         self.lb_logo.setObjectName(u"lb_logo")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.lb_logo.sizePolicy().hasHeightForWidth())
@@ -332,6 +332,29 @@ class Ui_MainWindow(object):
         self.lb_logo.setStyleSheet(u"")
 
         self.verticalLayout_6.addWidget(self.lb_logo, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+
+        self.horizontalLayout_20 = QHBoxLayout()
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_20.addItem(self.horizontalSpacer)
+
+        self.btn_inicia_semana = QPushButton(self.pg_home)
+        self.btn_inicia_semana.setObjectName(u"btn_inicia_semana")
+
+        self.horizontalLayout_20.addWidget(self.btn_inicia_semana)
+
+        self.btn_fecha_semana = QPushButton(self.pg_home)
+        self.btn_fecha_semana.setObjectName(u"btn_fecha_semana")
+
+        self.horizontalLayout_20.addWidget(self.btn_fecha_semana)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_20.addItem(self.horizontalSpacer_2)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_20)
 
         self.Pages.addWidget(self.pg_home)
         self.pg_vendas = QWidget()
@@ -381,23 +404,23 @@ class Ui_MainWindow(object):
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
         self.btn_venda_excluir = QPushButton(self.frame_9)
         self.btn_venda_excluir.setObjectName(u"btn_venda_excluir")
-        self.btn_venda_excluir.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_venda_excluir.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_23.addWidget(self.btn_venda_excluir)
 
         self.btn_venda_edit = QPushButton(self.frame_9)
         self.btn_venda_edit.setObjectName(u"btn_venda_edit")
-        self.btn_venda_edit.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_venda_edit.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_23.addWidget(self.btn_venda_edit)
 
         self.btn_venda_print = QPushButton(self.frame_9)
         self.btn_venda_print.setObjectName(u"btn_venda_print")
-        self.btn_venda_print.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_venda_print.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_23.addWidget(self.btn_venda_print)
 
-        self.verticalSpacer_11 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_11 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_23.addItem(self.verticalSpacer_11)
 
@@ -488,7 +511,7 @@ class Ui_MainWindow(object):
         self.btn_remove_venda_register = QPushButton(self.frame_8)
         self.btn_remove_venda_register.setObjectName(u"btn_remove_venda_register")
         self.btn_remove_venda_register.setMaximumSize(QSize(150, 16777215))
-        self.btn_remove_venda_register.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_remove_venda_register.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_22.addWidget(self.btn_remove_venda_register)
 
@@ -497,7 +520,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.btn_cancel_venda)
 
-        self.verticalSpacer_12 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_12 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_22.addItem(self.verticalSpacer_12)
 
@@ -535,7 +558,7 @@ class Ui_MainWindow(object):
 
         self.select_client_venda = QComboBox(self.frame_7)
         self.select_client_venda.setObjectName(u"select_client_venda")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.select_client_venda.sizePolicy().hasHeightForWidth())
@@ -555,7 +578,7 @@ class Ui_MainWindow(object):
 
         self.lb_venda_total = QLabel(self.frame_7)
         self.lb_venda_total.setObjectName(u"lb_venda_total")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.lb_venda_total.sizePolicy().hasHeightForWidth())
@@ -567,7 +590,7 @@ class Ui_MainWindow(object):
         self.btn_venda_addProduto = QPushButton(self.frame_7)
         self.btn_venda_addProduto.setObjectName(u"btn_venda_addProduto")
         self.btn_venda_addProduto.setMaximumSize(QSize(150, 35))
-        self.btn_venda_addProduto.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_venda_addProduto.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.gridLayout_4.addWidget(self.btn_venda_addProduto, 2, 9, 1, 1)
 
@@ -578,7 +601,7 @@ class Ui_MainWindow(object):
         self.btn_venda_cadastrar.setObjectName(u"btn_venda_cadastrar")
         self.btn_venda_cadastrar.setMinimumSize(QSize(150, 0))
         self.btn_venda_cadastrar.setMaximumSize(QSize(150, 16777215))
-        self.btn_venda_cadastrar.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_venda_cadastrar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_25.addWidget(self.btn_venda_cadastrar, 0, Qt.AlignHCenter)
 
@@ -615,6 +638,25 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_54.addLayout(self.horizontalLayout_19)
+
+        self.horizontalLayout_21 = QHBoxLayout()
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.horizontalLayout_21.setContentsMargins(0, 0, 0, -1)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_21.addItem(self.horizontalSpacer_3)
+
+        self.btn_download_list = QPushButton(self.tb_vendas_produtos_semanal)
+        self.btn_download_list.setObjectName(u"btn_download_list")
+
+        self.horizontalLayout_21.addWidget(self.btn_download_list)
+
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_21.addItem(self.horizontalSpacer_4)
+
+
+        self.verticalLayout_54.addLayout(self.horizontalLayout_21)
 
         self.tb_widget_vendas.addTab(self.tb_vendas_produtos_semanal, "")
 
@@ -707,7 +749,7 @@ class Ui_MainWindow(object):
         self.btn_contato_cliente = QPushButton(self.frame_14)
         self.btn_contato_cliente.setObjectName(u"btn_contato_cliente")
         self.btn_contato_cliente.setMinimumSize(QSize(150, 0))
-        self.btn_contato_cliente.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_contato_cliente.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_33.addWidget(self.btn_contato_cliente, 0, Qt.AlignHCenter)
 
@@ -760,7 +802,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_35.setObjectName(u"verticalLayout_35")
         self.frame_18 = QFrame(self.frame_15)
         self.frame_18.setObjectName(u"frame_18")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy5.setHorizontalStretch(0)
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.frame_18.sizePolicy().hasHeightForWidth())
@@ -803,7 +845,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.btn_anterior_graph_cliente = QPushButton(self.frame_21)
         self.btn_anterior_graph_cliente.setObjectName(u"btn_anterior_graph_cliente")
-        self.btn_anterior_graph_cliente.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_anterior_graph_cliente.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.horizontalLayout_11.addWidget(self.btn_anterior_graph_cliente, 0, Qt.AlignHCenter)
 
@@ -814,7 +856,7 @@ class Ui_MainWindow(object):
 
         self.btn_proximo_graph_cliente = QPushButton(self.frame_21)
         self.btn_proximo_graph_cliente.setObjectName(u"btn_proximo_graph_cliente")
-        self.btn_proximo_graph_cliente.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_proximo_graph_cliente.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.horizontalLayout_11.addWidget(self.btn_proximo_graph_cliente, 0, Qt.AlignHCenter)
 
@@ -863,23 +905,23 @@ class Ui_MainWindow(object):
         self.verticalLayout_38.setObjectName(u"verticalLayout_38")
         self.btn_excluir_venda_cliente_detail = QPushButton(self.frame_25)
         self.btn_excluir_venda_cliente_detail.setObjectName(u"btn_excluir_venda_cliente_detail")
-        self.btn_excluir_venda_cliente_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_excluir_venda_cliente_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_38.addWidget(self.btn_excluir_venda_cliente_detail)
 
         self.btn_editar_venda_cliente_detail = QPushButton(self.frame_25)
         self.btn_editar_venda_cliente_detail.setObjectName(u"btn_editar_venda_cliente_detail")
-        self.btn_editar_venda_cliente_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_editar_venda_cliente_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_38.addWidget(self.btn_editar_venda_cliente_detail)
 
         self.btn_imprimir_venda_cliente_detail = QPushButton(self.frame_25)
         self.btn_imprimir_venda_cliente_detail.setObjectName(u"btn_imprimir_venda_cliente_detail")
-        self.btn_imprimir_venda_cliente_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_imprimir_venda_cliente_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_38.addWidget(self.btn_imprimir_venda_cliente_detail)
 
-        self.verticalSpacer_19 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_19 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_38.addItem(self.verticalSpacer_19)
 
@@ -943,17 +985,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.btn_client_edit = QPushButton(self.frame_2)
         self.btn_client_edit.setObjectName(u"btn_client_edit")
-        self.btn_client_edit.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_client_edit.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_11.addWidget(self.btn_client_edit)
 
         self.btn_client_remove = QPushButton(self.frame_2)
         self.btn_client_remove.setObjectName(u"btn_client_remove")
-        self.btn_client_remove.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_client_remove.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_11.addWidget(self.btn_client_remove)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_11.addItem(self.verticalSpacer_3)
 
@@ -969,7 +1011,7 @@ class Ui_MainWindow(object):
         self.tab_clientes_register.setEnabled(True)
         self.verticalLayout_10 = QVBoxLayout(self.tab_clientes_register)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_10.addItem(self.verticalSpacer_5)
 
@@ -1038,14 +1080,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_10.addWidget(self.frame)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_10.addItem(self.verticalSpacer_4)
 
         self.btn_cadastrar_cliente = QPushButton(self.tab_clientes_register)
         self.btn_cadastrar_cliente.setObjectName(u"btn_cadastrar_cliente")
         self.btn_cadastrar_cliente.setMinimumSize(QSize(150, 30))
-        self.btn_cadastrar_cliente.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_cadastrar_cliente.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_10.addWidget(self.btn_cadastrar_cliente, 0, Qt.AlignHCenter)
 
@@ -1100,17 +1142,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.btn_editar_fornecedor = QPushButton(self.frame_4)
         self.btn_editar_fornecedor.setObjectName(u"btn_editar_fornecedor")
-        self.btn_editar_fornecedor.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_editar_fornecedor.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_13.addWidget(self.btn_editar_fornecedor)
 
         self.btn_excluir_fornecedor = QPushButton(self.frame_4)
         self.btn_excluir_fornecedor.setObjectName(u"btn_excluir_fornecedor")
-        self.btn_excluir_fornecedor.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_excluir_fornecedor.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_13.addWidget(self.btn_excluir_fornecedor)
 
-        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_13.addItem(self.verticalSpacer_7)
 
@@ -1125,7 +1167,7 @@ class Ui_MainWindow(object):
         self.Tab_fornecedores_cadastro.setObjectName(u"Tab_fornecedores_cadastro")
         self.verticalLayout_5 = QVBoxLayout(self.Tab_fornecedores_cadastro)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_5.addItem(self.verticalSpacer_6)
 
@@ -1161,14 +1203,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.frame_3)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_5.addItem(self.verticalSpacer_2)
 
         self.btn_cadastrar_fornecedor = QPushButton(self.Tab_fornecedores_cadastro)
         self.btn_cadastrar_fornecedor.setObjectName(u"btn_cadastrar_fornecedor")
         self.btn_cadastrar_fornecedor.setMinimumSize(QSize(150, 30))
-        self.btn_cadastrar_fornecedor.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_cadastrar_fornecedor.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_5.addWidget(self.btn_cadastrar_fornecedor, 0, Qt.AlignHCenter)
 
@@ -1266,7 +1308,7 @@ class Ui_MainWindow(object):
         self.btn_contato_fornecedor = QPushButton(self.frame_29)
         self.btn_contato_fornecedor.setObjectName(u"btn_contato_fornecedor")
         self.btn_contato_fornecedor.setMinimumSize(QSize(150, 0))
-        self.btn_contato_fornecedor.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_contato_fornecedor.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_48.addWidget(self.btn_contato_fornecedor, 0, Qt.AlignHCenter)
 
@@ -1327,7 +1369,7 @@ class Ui_MainWindow(object):
 
         self.frame_graph_fornecedor_detail = QFrame(self.frame_20)
         self.frame_graph_fornecedor_detail.setObjectName(u"frame_graph_fornecedor_detail")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         sizePolicy6.setHorizontalStretch(0)
         sizePolicy6.setVerticalStretch(0)
         sizePolicy6.setHeightForWidth(self.frame_graph_fornecedor_detail.sizePolicy().hasHeightForWidth())
@@ -1347,7 +1389,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.btn_anterior_ano_fornecedor_detail = QPushButton(self.frame_32)
         self.btn_anterior_ano_fornecedor_detail.setObjectName(u"btn_anterior_ano_fornecedor_detail")
-        self.btn_anterior_ano_fornecedor_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_anterior_ano_fornecedor_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.horizontalLayout_15.addWidget(self.btn_anterior_ano_fornecedor_detail)
 
@@ -1358,7 +1400,7 @@ class Ui_MainWindow(object):
 
         self.btn_proximo_ano_fornecedor_detail = QPushButton(self.frame_32)
         self.btn_proximo_ano_fornecedor_detail.setObjectName(u"btn_proximo_ano_fornecedor_detail")
-        self.btn_proximo_ano_fornecedor_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_proximo_ano_fornecedor_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.horizontalLayout_15.addWidget(self.btn_proximo_ano_fornecedor_detail)
 
@@ -1404,17 +1446,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_45.setObjectName(u"verticalLayout_45")
         self.btn_excluir_compra_fornecedor_detail = QPushButton(self.frame_30)
         self.btn_excluir_compra_fornecedor_detail.setObjectName(u"btn_excluir_compra_fornecedor_detail")
-        self.btn_excluir_compra_fornecedor_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_excluir_compra_fornecedor_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_45.addWidget(self.btn_excluir_compra_fornecedor_detail)
 
         self.btn_editar_compra_fornecedor_detail = QPushButton(self.frame_30)
         self.btn_editar_compra_fornecedor_detail.setObjectName(u"btn_editar_compra_fornecedor_detail")
-        self.btn_editar_compra_fornecedor_detail.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_editar_compra_fornecedor_detail.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_45.addWidget(self.btn_editar_compra_fornecedor_detail)
 
-        self.verticalSpacer_20 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_20 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_45.addItem(self.verticalSpacer_20)
 
@@ -1632,17 +1674,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
         self.btn_edit_product = QPushButton(self.frame_5)
         self.btn_edit_product.setObjectName(u"btn_edit_product")
-        self.btn_edit_product.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_edit_product.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_16.addWidget(self.btn_edit_product)
 
         self.btn_excluir_product = QPushButton(self.frame_5)
         self.btn_excluir_product.setObjectName(u"btn_excluir_product")
-        self.btn_excluir_product.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_excluir_product.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_16.addWidget(self.btn_excluir_product)
 
-        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_16.addItem(self.verticalSpacer_8)
 
@@ -1659,7 +1701,7 @@ class Ui_MainWindow(object):
         self.tab_produtos_cadastrar.setSizePolicy(sizePolicy)
         self.verticalLayout_19 = QVBoxLayout(self.tab_produtos_cadastrar)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_19.addItem(self.verticalSpacer_10)
 
@@ -1704,21 +1746,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_19.addWidget(self.frame_6)
 
-        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_19.addItem(self.verticalSpacer_9)
 
         self.btn_cadastrar_produto = QPushButton(self.tab_produtos_cadastrar)
         self.btn_cadastrar_produto.setObjectName(u"btn_cadastrar_produto")
         self.btn_cadastrar_produto.setEnabled(True)
-        sizePolicy7 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy7 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy7.setHorizontalStretch(0)
         sizePolicy7.setVerticalStretch(0)
         sizePolicy7.setHeightForWidth(self.btn_cadastrar_produto.sizePolicy().hasHeightForWidth())
         self.btn_cadastrar_produto.setSizePolicy(sizePolicy7)
         self.btn_cadastrar_produto.setMinimumSize(QSize(150, 30))
         self.btn_cadastrar_produto.setMaximumSize(QSize(180, 29))
-        self.btn_cadastrar_produto.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_cadastrar_produto.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_cadastrar_produto.setLayoutDirection(Qt.LeftToRight)
 
         self.verticalLayout_19.addWidget(self.btn_cadastrar_produto, 0, Qt.AlignHCenter)
@@ -1782,53 +1824,53 @@ class Ui_MainWindow(object):
         self.toolBox.setObjectName(u"toolBox")
         self.page = QWidget()
         self.page.setObjectName(u"page")
-        self.page.setGeometry(QRect(0, 0, 108, 397))
+        self.page.setGeometry(QRect(0, 0, 108, 531))
         self.verticalLayout_8 = QVBoxLayout(self.page)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.btn_menu_home = QPushButton(self.page)
         self.btn_menu_home.setObjectName(u"btn_menu_home")
-        self.btn_menu_home.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_home.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_home)
 
         self.btn_menu_clientes = QPushButton(self.page)
         self.btn_menu_clientes.setObjectName(u"btn_menu_clientes")
-        self.btn_menu_clientes.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_clientes.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_clientes)
 
         self.btn_menu_fornecedores = QPushButton(self.page)
         self.btn_menu_fornecedores.setObjectName(u"btn_menu_fornecedores")
-        self.btn_menu_fornecedores.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_fornecedores.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_fornecedores)
 
         self.btn_menu_produtos = QPushButton(self.page)
         self.btn_menu_produtos.setObjectName(u"btn_menu_produtos")
-        self.btn_menu_produtos.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_produtos.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_produtos)
 
         self.btn_menu_vendas = QPushButton(self.page)
         self.btn_menu_vendas.setObjectName(u"btn_menu_vendas")
-        self.btn_menu_vendas.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_vendas.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_vendas)
 
         self.btn_menu_compras = QPushButton(self.page)
         self.btn_menu_compras.setObjectName(u"btn_menu_compras")
-        self.btn_menu_compras.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_menu_compras.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.btn_menu_compras)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_8.addItem(self.verticalSpacer)
 
         self.toolBox.addItem(self.page, u"Menu")
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
-        self.page_2.setGeometry(QRect(0, 0, 170, 397))
+        self.page_2.setGeometry(QRect(0, 0, 170, 531))
         self.verticalLayout_7 = QVBoxLayout(self.page_2)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.label_8 = QLabel(self.page_2)
@@ -1836,7 +1878,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.label_8, 0, Qt.AlignHCenter)
 
-        self.verticalSpacer_15 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_15 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_15)
 
@@ -1855,7 +1897,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.label_9, 0, Qt.AlignHCenter)
 
-        self.verticalSpacer_14 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_14 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_14)
 
@@ -1874,7 +1916,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.label_13)
 
-        self.verticalSpacer_13 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_13 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_13)
 
@@ -1961,6 +2003,8 @@ class Ui_MainWindow(object):
         self.btn_compra_registrar.setText(QCoreApplication.translate("MainWindow", u"Registrar", None))
         self.tb_widget_compras.setTabText(self.tb_widget_compras.indexOf(self.tb_compras_cadastro), QCoreApplication.translate("MainWindow", u"Cadastrar", None))
         self.lb_logo.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><img src=\":/icons/icons/Logo.png\"/></p></body></html>", None))
+        self.btn_inicia_semana.setText(QCoreApplication.translate("MainWindow", u"Inicia Semana", None))
+        self.btn_fecha_semana.setText(QCoreApplication.translate("MainWindow", u"Fechar Semana", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"VENDAS", None))
         self.txt_vendas_pesquisar.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Pesquisar", None))
         ___qtablewidgetitem8 = self.tb_vendas.horizontalHeaderItem(0)
@@ -2018,6 +2062,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Medida", None));
         ___qtablewidgetitem18 = self.tab_pedido_semana.horizontalHeaderItem(2)
         ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Quantidade", None));
+        self.btn_download_list.setText(QCoreApplication.translate("MainWindow", u"Download excel", None))
         self.tb_widget_vendas.setTabText(self.tb_widget_vendas.indexOf(self.tb_vendas_produtos_semanal), QCoreApplication.translate("MainWindow", u"Pedidos da Semana", None))
         self.lb_nome_cliente_detail.setText(QCoreApplication.translate("MainWindow", u"Nome: ", None))
         self.lb_cpf_cliente_detail.setText(QCoreApplication.translate("MainWindow", u"CPF:", None))

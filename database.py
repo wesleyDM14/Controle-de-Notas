@@ -1,4 +1,6 @@
 import sqlite3
+import datetime
+
 
 class Data_base:
     def __init__(self, name="system.db") -> None:
@@ -12,9 +14,6 @@ class Data_base:
             self.connection.close()
         except Exception as e:
             print(e)
-
-    #########################################################################
-    # CREATE TABLES
 
     def create_table_client(self):
         self.connect()
@@ -66,6 +65,20 @@ class Data_base:
         )
         self.close_connection()
 
+    def create_table_semana_venda(self):
+        self.connect()
+        cursor = self.connection.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS Semana(
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                DATA_INICIO TEXT,
+                STATUS TEXT
+            );
+            """
+        )
+        self.close_connection()
+
     def create_table_venda(self):
         self.connect()
         cursor = self.connection.cursor()
@@ -79,9 +92,11 @@ class Data_base:
                 TIPO_PAGAMENTO TEXT,
                 VENCIMENTO TEXT,
                 STATUS TEXT,
+                SEMANA_ID INTEGER,
 
-                FOREIGN KEY (CLIENTE_ID) REFERENCES Clientes (ID) ON DELETE CASCADE
-            )
+                FOREIGN KEY (CLIENTE_ID) REFERENCES Clientes (ID) ON DELETE CASCADE,
+                FOREIGN KEY (SEMANA_ID) REFERENCES Semana(ID) ON DELETE SET NULL
+            );
             """
         )
         self.close_connection()
@@ -120,7 +135,7 @@ class Data_base:
                 STATUS TEXT,
 
                 FOREIGN KEY (FORNECEDOR_ID) REFERENCES Fornecedor(ID) ON DELETE CASCADE
-            )
+            );
             """
         )
         self.close_connection()
@@ -144,10 +159,6 @@ class Data_base:
             """
         )
         self.close_connection()
-    #########################################################################
-
-    #########################################################################
-    # CREATE
 
     def register_client(self, fullDataSet):
         self.connect()
@@ -217,8 +228,16 @@ class Data_base:
 
     def register_venda(self, data):
         self.connect()
-        camposTabela = ("CLIENTE_ID", "TOTAL", "DATE", "TIPO_PAGAMENTO", "VENCIMENTO", "STATUS")
-        qntd = "?,?,?,?,?,?"
+        camposTabela = (
+            "CLIENTE_ID",
+            "TOTAL",
+            "DATE",
+            "TIPO_PAGAMENTO",
+            "VENCIMENTO",
+            "STATUS",
+            "SEMANA_ID"
+        )
+        qntd = "?,?,?,?,?,?,?"
         cursor = self.connection.cursor()
         try:
             cursor.execute(
@@ -235,7 +254,7 @@ class Data_base:
             return "erro", str(e)
         finally:
             self.close_connection()
-    
+
     def link_venda_to_product(self, fullDataSet):
         self.connect()
         camposTabela = ("PRODUTO_ID", "QUANT_PRODUTO", "PRECO_PARCIAL", "VENDA_ID")
@@ -259,7 +278,14 @@ class Data_base:
 
     def register_compra(self, data):
         self.connect()
-        camposTabela = ("FORNECEDOR_ID", "TOTAL", "DATE", "TIPO_PAGAMENTO", "VENCIMENTO", "STATUS")
+        camposTabela = (
+            "FORNECEDOR_ID",
+            "TOTAL",
+            "DATE",
+            "TIPO_PAGAMENTO",
+            "VENCIMENTO",
+            "STATUS",
+        )
         qntd = "?,?,?,?,?,?"
         cursor = self.connection.cursor()
         try:
@@ -280,7 +306,13 @@ class Data_base:
 
     def link_compra_to_product(self, fullDataSet):
         self.connect()
-        camposTabela = ("PRODUTO_ID", "PRECO_UND", "QUANT_PRODUTO", "PRECO_PARCIAL", "COMPRA_ID")
+        camposTabela = (
+            "PRODUTO_ID",
+            "PRECO_UND",
+            "QUANT_PRODUTO",
+            "PRECO_PARCIAL",
+            "COMPRA_ID",
+        )
         qntd = "?,?,?,?,?"
         cursor = self.connection.cursor()
         try:
@@ -298,10 +330,6 @@ class Data_base:
             return "erro", str(e)
         finally:
             self.close_connection()
-    #########################################################################
-
-    #########################################################################
-    # READ ALL
 
     def select_all_clients(self):
         try:
@@ -347,7 +375,7 @@ class Data_base:
             vendas = cursor.fetchall()
             return vendas
         except Exception as e:
-            print (e)
+            print(e)
         finally:
             self.close_connection()
 
@@ -362,10 +390,6 @@ class Data_base:
             print(e)
         finally:
             self.close_connection()
-    #########################################################################
-
-    #########################################################################
-    # READ UNIQUE
 
     def select_specific_client(self, clientId):
         try:
@@ -431,12 +455,14 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"SELECT * FROM Produtos_Venda WHERE PRODUTO_ID = {productId}")
+            cursor.execute(
+                f"SELECT * FROM Produtos_Venda WHERE PRODUTO_ID = {productId}"
+            )
         except Exception as e:
             print(e)
         finally:
             self.close_connection()
-    
+
     def select_specific_compra(self, compraId):
         try:
             self.connect()
@@ -453,17 +479,16 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"SELECT * FROM Produtos_Compra WHERE COMPRA_ID='{compraId}'")
+            cursor.execute(
+                f"SELECT * FROM Produtos_Compra WHERE COMPRA_ID='{compraId}'"
+            )
             productsCompra = cursor.fetchall()
             return productsCompra
         except Exception as e:
             print(e)
         finally:
             self.close_connection()
-    #########################################################################
 
-    #########################################################################
-    # Get vendas by Client
     def get_vendas_by_clientId(self, clientId):
         try:
             self.connect()
@@ -492,7 +517,9 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"SELECT * FROM Produtos_Compra WHERE PRODUTO_ID='{productId}'")
+            cursor.execute(
+                f"SELECT * FROM Produtos_Compra WHERE PRODUTO_ID='{productId}'"
+            )
             compras = cursor.fetchall()
             return compras
         except Exception as e:
@@ -504,7 +531,9 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"SELECT * FROM Produtos_Compra WHERE COMPRA_ID='{compraId}'")
+            cursor.execute(
+                f"SELECT * FROM Produtos_Compra WHERE COMPRA_ID='{compraId}'"
+            )
             compras = cursor.fetchall()
             return compras
         except Exception as e:
@@ -516,9 +545,30 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"SELECT * FROM Produtos_Venda WHERE PRODUTO_ID='{productId}'")
+            cursor.execute(
+                f"SELECT * FROM Produtos_Venda WHERE PRODUTO_ID='{productId}'"
+            )
             compras = cursor.fetchall()
             return compras
+        except Exception as e:
+            print(e)
+        finally:
+            self.close_connection()
+
+    def get_vendas_active_by_productId(self, productId):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            cursor.execute(
+                """
+                SELECT PV.* FROM Produtos_venda PV
+                JOIN Vendas V ON PV.VENDA_ID = V.ID
+                JOIN Semana S ON V.SEMANA_ID = S.ID
+                WHERE PV.PRODUTO_ID = ? AND S.STATUS = 'ABERTA'
+                """, (productId, )
+            )
+            vendas_ativas = cursor.fetchall()
+            return vendas_ativas
         except Exception as e:
             print(e)
         finally:
@@ -547,10 +597,6 @@ class Data_base:
             print(e)
         finally:
             self.close_connection()
-    #########################################################################
-
-    #########################################################################
-    # DELETE
 
     def delete_client(self, clientId):
         try:
@@ -629,10 +675,7 @@ class Data_base:
             return "Error", str(e)
         finally:
             self.close_connection()
-    #########################################################################
 
-    #########################################################################
-    # UPDATE
     def update_client(self, fullDataSet):
         self.connect()
         try:
@@ -726,7 +769,9 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"UPDATE Vendas SET STATUS = '{status}' WHERE ID = '{vendaId}'")
+            cursor.execute(
+                f"UPDATE Vendas SET STATUS = '{status}' WHERE ID = '{vendaId}'"
+            )
             self.connection.commit()
             return "Sucess", "Status Atualizado com sucesso!"
         except Exception as e:
@@ -739,7 +784,9 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"UPDATE Compra SET STATUS = '{status}' WHERE ID = '{compraId}'")
+            cursor.execute(
+                f"UPDATE Compra SET STATUS = '{status}' WHERE ID = '{compraId}'"
+            )
             self.connection.commit()
             return "Sucess", "Status Atualizado com sucesso!"
         except Exception as e:
@@ -752,9 +799,11 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"UPDATE Produtos_Venda SET PRECO_PARCIAL = '{subTotal}' WHERE ID = '{tempId}'")
+            cursor.execute(
+                f"UPDATE Produtos_Venda SET PRECO_PARCIAL = '{subTotal}' WHERE ID = '{tempId}'"
+            )
             self.connection.commit()
-            print ("Sucess, Subtotal atualizado com sucesso!")
+            print("Sucess, Subtotal atualizado com sucesso!")
         except Exception as e:
             print(e)
             return "erro", str(e)
@@ -765,7 +814,9 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute(f"UPDATE Vendas SET TOTAL = '{total}' WHERE ID = '{vendaId}'")
+            cursor.execute(
+                f"UPDATE Vendas SET TOTAL = '{total}' WHERE ID = '{vendaId}'"
+            )
             self.connection.commit()
             return "Sucess", "Total de venda atualizado com sucesso!"
         except Exception as e:
@@ -773,12 +824,51 @@ class Data_base:
             return "erro", str(e)
         finally:
             self.close_connection()
-    
+
+    def get_open_week(self):
+        try:
+            self.connect()
+            cursor = self.connection.cursor()
+            query = "SELECT * FROM Semana WHERE STATUS='ABERTA';"
+            cursor.execute(query)
+            semana = cursor.fetchone()
+            return semana
+        except Exception as e:
+            print(e)
+        finally:
+            self.close_connection()
+
+    def start_new_week(self):
+        query = "INSERT INTO Semana (DATA_INICIO, STATUS) VALUES (?, 'ABERTA');"
+        self.connect()
+        cursor = self.connection.cursor()
+        cursor.execute(query, (datetime.date.today(),))
+        self.connection.commit()
+        nova_semana_id = cursor.lastrowid
+        self.close_connection()
+        return nova_semana_id
+
+    def close_week(self, semana_id):
+        query = "UPDATE Semana SET STATUS = 'FECHADA' WHERE ID = ?;"
+        self.connect()
+        cursor = self.connection.cursor()
+        cursor.execute(query, (semana_id,))
+        self.connection.commit()
+        self.close_connection()
+
+    def get_sales_by_week(self, semana_id):
+        query = "SELECT * FROM Vendas WHERE SEMANA_ID=?;"
+        self.connect()
+        cursor = self.connection.cursor()
+        cursor.execute(query, (semana_id,))
+        vendas = cursor.fetchall()
+        self.close_connection()
+        return vendas
+
     def create_connection(self, connection, db):
         try:
             pass
         except Exception as e:
-            return 'erro', str(e)
+            return "erro", str(e)
         finally:
             self.close_connection()
-#########################################################################
