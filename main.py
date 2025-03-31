@@ -2021,10 +2021,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer = Usb(0x1FC9, 0x2016)
 
                         printer.set(align="center", font="A", text_type="B")
-                        printer.text("\nCOMERCIAL J. FRUTAS\n")
-                        printer.text("ORG. DAMARIS e GILBERLANDIA\n")
-                        printer.text("(84)99707-4633 / (84)99847-2121\n")
-                        printer.text("CNPJ: 02.264.693/0001-55\nALEXANDRIA - RN\n")
+                        printer.text("\nCASA DAS FRUTAS E VERDURAS\n")
+                        printer.text("ORG. NEGUINHO e FAMILIA\n")
+                        printer.text("(84)99697-5576 / (84)99894-8359\n")
+                        printer.text("CNPJ: 38.190.263/0001-83\nALEXANDRIA - RN\n")
                         printer.text("\n")
 
                         printer.set(align="center", text_type="B")
@@ -2218,10 +2218,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer = Usb(0x1FC9, 0x2016)
 
                         printer.set(align="center", font="A", text_type="B")
-                        printer.text("\nCOMERCIAL J. FRUTAS\n")
-                        printer.text("ORG. DAMARIS e GILBERLANDIA\n")
-                        printer.text("(84)99707-4633 / (84)99847-2121\n")
-                        printer.text("CNPJ: 02.264.693/0001-55\nALEXANDRIA - RN\n")
+                        printer.text("\nCASA DAS FRUTAS E VERDURAS\n")
+                        printer.text("ORG. NEGUINHO e FAMILIA\n")
+                        printer.text("(84)99697-5576 / (84)99894-8359\n")
+                        printer.text("CNPJ: 38.190.263/0001-83\nALEXANDRIA - RN\n")
                         printer.text("\n")
 
                         printer.set(align="center", text_type="B")
