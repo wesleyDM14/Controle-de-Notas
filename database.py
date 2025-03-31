@@ -371,7 +371,13 @@ class Data_base:
         try:
             self.connect()
             cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM Vendas ORDER BY DATE")
+            cursor.execute("""
+                SELECT * FROM Vendas 
+                ORDER BY STRFTIME('%Y-%m-%d', 
+                                SUBSTR(DATE, 7, 4) || '-' || 
+                                SUBSTR(DATE, 4, 2) || '-' || 
+                                SUBSTR(DATE, 1, 2)) DESC
+            """)
             vendas = cursor.fetchall()
             return vendas
         except Exception as e:
