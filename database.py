@@ -759,7 +759,8 @@ class Data_base:
                 DATE = '{fullDataSet[2]}',
                 TIPO_PAGAMENTO = '{fullDataSet[3]}',
                 VENCIMENTO = '{fullDataSet[4]}',
-                STATUS = '{fullDataSet[5]}'
+                STATUS = '{fullDataSet[5]}',
+                SEMANA_ID = '{fullDataSet[6]}'
 
                 WHERE ID = '{vendaId}'"""
             )

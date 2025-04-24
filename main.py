@@ -1111,9 +1111,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for venda in vendas:
             venda_id = venda[0]
             produtosToVenda = self.db.get_vendas_by_vendasId(vendaId=venda_id)
-            nomeProduto = ""
-            quantidadeProduto = 0
-            medidaProduto = ""
 
             for produto in produtosToVenda:
                 produtoId = produto[1]
@@ -1122,20 +1119,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 medidaProduto = currentProduto[2]
                 quantidadeProduto = produto[2]
 
-                key = nomeProduto + "/" + medidaProduto
+                key = (nomeProduto, medidaProduto)
 
                 if key in dados:
                     dados[key] += quantidadeProduto
                 else:
                     dados[key] = quantidadeProduto
 
-        keys = dados.keys()
-        self.tab_pedido_semana.setRowCount(len(dados))
-        for row, text in enumerate(keys):
-            keySplit = text.split("/")
-            produto = (keySplit[0], keySplit[1], dados[text])
-            for column, data in enumerate(produto):
-                self.tab_pedido_semana.setItem(row, column, QTableWidgetItem(str(data)))
+        produtos_ordenados = sorted(dados.items())
+        self.tab_pedido_semana.setRowCount(len(produtos_ordenados))
+        for row, ((nome, medida), quantidade) in enumerate(produtos_ordenados):
+           self.tab_pedido_semana.setItem(row, 0, QTableWidgetItem(nome))
+           self.tab_pedido_semana.setItem(row, 1, QTableWidgetItem(medida))
+           self.tab_pedido_semana.setItem(row, 2, QTableWidgetItem(str(quantidade)))
 
     def export_to_excell(self):
         options = QFileDialog.Options()
@@ -1148,26 +1144,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         )
 
         if file_name:
-            dados_tabela = []
+           dados_tabela = []
+           row_count = self.tab_pedido_semana.rowCount()
 
-            row_count = self.tab_pedido_semana.rowCount()
-            column_count = self.tab_pedido_semana.columnCount()
+           for row in range(row_count):
+              nome = self.tab_pedido_semana.item(row, 0).text()
+              medida = self.tab_pedido_semana.item(row, 1).text()
+              quantidade = self.tab_pedido_semana.item(row, 2).text()
+              dados_tabela.append([nome, medida, quantidade])
 
-            for row in range(row_count):
-                row_data = []
-                for col in range(column_count):
-                    item = self.tab_pedido_semana.item(row, col)
-                    if item is not None:
-                        row_data.append(item.text())
-                    else:
-                        row_data.append("")
-                dados_tabela.append(row_data)
+           df = pd.DataFrame(dados_tabela, columns=["Produto", "Unidade", "Quantidade"])
 
-            df = pd.DataFrame(dados_tabela)
-
-            # Salva o arquivo no local escolhido pelo usuário
-            df.to_excel(file_name, index=False, header=False, engine="openpyxl")
-            print(f"Arquivo exportado para {file_name}")
+           df.to_excel(file_name, index=False, engine="openpyxl")
+           print(f"Arquivo exportado para {file_name}")
 
     def update_client(self):
         clientId = (
@@ -1342,6 +1331,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         tipoPagamento,
                         dataVencimento,
                         status,
+                        self.semanaAtual[0]
                     )
 
                     response = self.db.update_venda(
@@ -1577,6 +1567,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         tipoPagamento,
                         dataVencimento,
                         status,
+                        int(self.semanaAtual[0])
                     )
 
                     response = self.db.update_venda(
@@ -2020,51 +2011,49 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     try:
                         printer = Usb(0x1FC9, 0x2016)
 
-                        printer.set(align="center", font="A", text_type="B")
+                        printer.set(align="center", bold=True)
                         printer.text("\nCASA DAS FRUTAS E VERDURAS\n")
                         printer.text("ORG. NEGUINHO e FAMILIA\n")
                         printer.text("(84)99697-5576 / (84)99894-8359\n")
                         printer.text("CNPJ: 38.190.263/0001-83\nALEXANDRIA - RN\n")
                         printer.text("\n")
 
-                        printer.set(align="center", text_type="B")
+                        printer.set(align="center", bold=True)
                         printer.text("Via Conferente\n")
 
-                        printer.set(align="center", text_type="normal")
+                        printer.set(align="center")
                         printer.text("=============================================\n")
 
-                        printer.set(align="center", text_type="B")
+                        printer.set(align="center", bold=True)
                         printer.text("VENDA\n")
 
-                        printer.set(align="center", text_type="normal")
+                        printer.set(align="center")
                         printer.text("=============================================\n")
 
-                        printer.set(align="left", text_type="normal")
+                        printer.set(align="left")
                         printer.text("Pedido : " + str(venda[0]) + "\n")
 
-                        printer.set(align="left", text_type="normal")
+                        printer.set(align="left")
                         printer.text("Data: " + str(venda[3]) + "\n")
 
-                        printer.set(align="left", text_type="normal")
+                        printer.set(align="left")
                         printer.text("Cliente: ")
 
-                        printer.set(
-                            align="left", font="B", text_type="B", height=2, width=2
-                        )
+                        printer.set(align="left", bold=True, double_height=True, double_width=True)
                         printer.text(str(cliente[2]).upper() + "\n")
 
-                        printer.set(align="left", text_type="normal")
+                        printer.set(align="left")
                         printer.text("Cidade: " + cliente[7] + "\n")
 
-                        printer.set(align="center", text_type="normal")
+                        printer.set(align="center")
                         printer.text("=============================================\n")
 
-                        printer.set(align="right", text_type="normal")
+                        printer.set(align="right")
                         printer.text("Especie        Quant. UN     Unit.      Total\n")
                         printer.text("\n")
 
                         for productToText in produtosPrint:
-                            printer.set(align="left", font="A", text_type="B")
+                            printer.set(align="left",bold=True)
                             if str(productToText[0]).lower() == "bobina":
                                 if x == 0:
                                     quant, ok = QInputDialog.getText(
@@ -2115,17 +2104,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                 printer.text(strToPrint)
                                 printer.text("\n")
 
-                        printer.set(align="center", text_type="B")
+                        printer.set(align="center", bold=True)
                         printer.text(
                             "\n--Total--------------------------------------\n"
                         )
 
-                        printer.set(
-                            align="left", font="B", text_type="B", width=2, height=2
-                        )
+                        printer.set(align="left", bold=True, double_height=True, double_width=True)
                         printer.text(" R$" + str(f"{float(venda[2]):9.2f}") + "\n")
 
-                        printer.set(align="left", text_type="B")
+                        printer.set(align="left", bold=True)
                         printer.text("\n")
                         printer.text("Qtd. de Itens: " + str(len(produtosPrint)) + "\n")
 
@@ -2136,16 +2123,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         printer.text("\n")
                         printer.text("\n")
 
-                        printer.set(align="left", text_type="normal")
+                        printer.set(align="left")
                         printer.text("ASS: ")
 
-                        printer.set(align="left", text_type="U")
+                        printer.set(align="left", underline=True)
                         printer.text("                                        \n")
 
-                        printer.set(align="center", text_type="normal")
+                        printer.set(align="center")
                         printer.text("########### SEM VALOR FISCAL ############")
 
                         printer.cut()
+                        printer.close()
 
                     except Exception as e:
                         self.msg("Erro", str(e))
@@ -2210,139 +2198,135 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                     temp = (product[1], item[2], uniTemp, product[3], item[3])
                     produtosPrint.append(temp)
-
-                for x in range(2):
                     produtosPrint.sort(key=lambda produto: produto[0])
+                    printer = Usb(0x1FC9, 0x2016)
+                
+                for x in range(2):
+                    
                     try:
+                       printer.set(align="center", bold=True)
+                       printer.text("\nCASA DAS FRUTAS E VERDURAS\n")
+                       printer.text("ORG. NEGUINHO e FAMILIA\n")
+                       printer.text("(84)99697-5576 / (84)99894-8359\n")
+                       printer.text("CNPJ: 38.190.263/0001-83\nALEXANDRIA - RN\n")
+                       printer.text("\n")
 
-                        printer = Usb(0x1FC9, 0x2016)
+                       printer.set(align="center", bold=True)
+                       printer.text("Via Conferente\n")
 
-                        printer.set(align="center", font="A", text_type="B")
-                        printer.text("\nCASA DAS FRUTAS E VERDURAS\n")
-                        printer.text("ORG. NEGUINHO e FAMILIA\n")
-                        printer.text("(84)99697-5576 / (84)99894-8359\n")
-                        printer.text("CNPJ: 38.190.263/0001-83\nALEXANDRIA - RN\n")
-                        printer.text("\n")
+                       printer.set(align="center")
+                       printer.text("=============================================\n")
 
-                        printer.set(align="center", text_type="B")
-                        printer.text("Via Conferente\n")
+                       printer.set(align="center", bold=True)
+                       printer.text("VENDA\n")
 
-                        printer.set(align="center", text_type="normal")
-                        printer.text("=============================================\n")
+                       printer.set(align="center")
+                       printer.text("=============================================\n")
 
-                        printer.set(align="center", text_type="B")
-                        printer.text("VENDA\n")
+                       printer.set(align="left")
+                       printer.text("Pedido : " + str(venda[0]) + "\n")
 
-                        printer.set(align="center", text_type="normal")
-                        printer.text("=============================================\n")
+                       printer.set(align="left")
+                       printer.text("Data: " + str(venda[3]) + "\n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Pedido : " + str(venda[0]) + "\n")
+                       printer.set(align="left")
+                       printer.text("Cliente: ")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Data: " + str(venda[3]) + "\n")
+                       printer.set(align="left", bold=True, double_height=True, double_width=True)
+                       printer.text(str(cliente[2]).upper() + "\n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Cliente: ")
+                       printer.set(align="left")
+                       printer.text("Cidade: " + cliente[7] + "\n")
 
-                        printer.set(
-                            align="left", font="B", text_type="B", height=2, width=2
-                        )
-                        printer.text(str(cliente[2]).upper() + "\n")
+                       printer.set(align="center")
+                       printer.text("=============================================\n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("Cidade: " + cliente[7] + "\n")
+                       printer.set(align="right")
+                       printer.text("Especie        Quant. UN     Unit.      Total\n")
+                       printer.text("\n")
 
-                        printer.set(align="center", text_type="normal")
-                        printer.text("=============================================\n")
+                       for productToText in produtosPrint:
+                           printer.set(align="left",bold=True)
+                           if str(productToText[0]).lower() == "bobina":
+                               if x == 0:
+                                   quant, ok = QInputDialog.getText(
+                                       self,
+                                       "Peso da Bobina",
+                                       "Digite o peso da bobina: ",
+                                   )
+                                   if ok:
+                                       vendaTemp = list(venda)
+                                       vendaTemp[2] -= productToText[4]
+                                       vendaTemp[2] += float(quant) * float(
+                                           productToText[3]
+                                       )
+                                       venda = tuple(vendaTemp)
+                                       self.db.update_total_venda(
+                                           vendaId=vendaId, total=venda[2]
+                                       )
+                                       strTemp = "(" + str(quant) + "Kg)"
+                                       valueTemp = str(
+                                           f"{float((float(quant) * float(productToText[3]))):9.2f}"
+                                       )
+                                       strToPrint = str.format(
+                                           "{:15s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
+                                           str(productToText[0]).upper(),
+                                           float(productToText[1]),
+                                           productToText[2],
+                                           strTemp,
+                                           productToText[3],
+                                           float(valueTemp),
+                                       )
+                                       self.strBobina = strToPrint
+                                       printer.text(strToPrint)
+                                       printer.text("\n")
+                               else:
+                                   strToPrint = self.strBobina
+                                   printer.text(strToPrint)
+                                   printer.text("\n")
 
-                        printer.set(align="right", text_type="normal")
-                        printer.text("Especie        Quant. UN     Unit.      Total\n")
-                        printer.text("\n")
+                           else:
+                               strToPrint = str.format(
+                                   "{:15s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
+                                   str(productToText[0]).upper(),
+                                   productToText[1],
+                                   productToText[2],
+                                   productToText[3],
+                                   productToText[4],
+                               )
+                               printer.text(strToPrint)
+                               printer.text("\n")
 
-                        for productToText in produtosPrint:
-                            printer.set(align="left", font="A", text_type="B")
-                            if str(productToText[0]).lower() == "bobina":
-                                if x == 0:
-                                    quant, ok = QInputDialog.getText(
-                                        self,
-                                        "Peso da Bobina",
-                                        "Digite o peso da bobina: ",
-                                    )
-                                    if ok:
-                                        vendaTemp = list(venda)
-                                        vendaTemp[2] -= productToText[4]
-                                        vendaTemp[2] += float(quant) * float(
-                                            productToText[3]
-                                        )
-                                        venda = tuple(vendaTemp)
-                                        self.db.update_total_venda(
-                                            vendaId=vendaId, total=venda[2]
-                                        )
-                                        strTemp = "(" + str(quant) + "Kg)"
-                                        valueTemp = str(
-                                            f"{float((float(quant) * float(productToText[3]))):9.2f}"
-                                        )
-                                        strToPrint = str.format(
-                                            "{:15s} {:7.1f} {:2s} {:6s} {:5.2f} {:9.2f}\n",
-                                            str(productToText[0]).upper(),
-                                            float(productToText[1]),
-                                            productToText[2],
-                                            strTemp,
-                                            productToText[3],
-                                            float(valueTemp),
-                                        )
-                                        self.strBobina = strToPrint
-                                        printer.text(strToPrint)
-                                        printer.text("\n")
-                                else:
-                                    strToPrint = self.strBobina
-                                    printer.text(strToPrint)
-                                    printer.text("\n")
+                       printer.set(align="center", bold=True)
+                       printer.text(
+                           "\n--Total--------------------------------------\n"
+                       )
 
-                            else:
-                                strToPrint = str.format(
-                                    "{:15s} {:9.1f} {:2s} {:9.2f} {:9.2f}\n",
-                                    str(productToText[0]).upper(),
-                                    productToText[1],
-                                    productToText[2],
-                                    productToText[3],
-                                    productToText[4],
-                                )
-                                printer.text(strToPrint)
-                                printer.text("\n")
+                       printer.set(align="left", bold=True, double_height=True, double_width=True)
+                       printer.text(" R$" + str(f"{float(venda[2]):9.2f}") + "\n")
 
-                        printer.set(align="center", text_type="B")
-                        printer.text(
-                            "\n--Total--------------------------------------\n"
-                        )
+                       printer.set(align="left", bold=True)
+                       printer.text("\n")
+                       printer.text("Qtd. de Itens: " + str(len(produtosPrint)) + "\n")
 
-                        printer.set(
-                            align="left", font="B", text_type="B", width=2, height=2
-                        )
-                        printer.text(" R$" + str(f"{float(venda[2]):9.2f}") + "\n")
+                       printer.text("\n")
+                       printer.text("\n")
+                       printer.text("\n")
+                       printer.text("\n")
+                       printer.text("\n")
+                       printer.text("\n")
 
-                        printer.set(align="left", text_type="B")
-                        printer.text("\n")
-                        printer.text("Qtd. de Itens: " + str(len(produtosPrint)) + "\n")
+                       printer.set(align="left")
+                       printer.text("ASS: ")
 
-                        printer.text("\n")
-                        printer.text("\n")
-                        printer.text("\n")
-                        printer.text("\n")
-                        printer.text("\n")
-                        printer.text("\n")
+                       printer.set(align="left", underline=True)
+                       printer.text("                                        \n")
 
-                        printer.set(align="left", text_type="normal")
-                        printer.text("ASS: ")
+                       printer.set(align="center")
+                       printer.text("########### SEM VALOR FISCAL ############")
 
-                        printer.set(align="left", text_type="U")
-                        printer.text("                                        \n")
-
-                        printer.set(align="center", text_type="normal")
-                        printer.text("########### SEM VALOR FISCAL ############")
-
-                        printer.cut()
+                       printer.cut()
+                       printer.close()
 
                     except Exception as e:
                         self.msg("Erro", str(e))
